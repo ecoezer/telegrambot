@@ -3,8 +3,18 @@ import { StringSession } from "telegram/sessions/index.js";
 import { NewMessage } from "telegram/events/index.js";
 import admin from 'firebase-admin';
 import dotenv from "dotenv";
+import http from "http";
 
 dotenv.config();
+
+// 0. Dummy HTTP Server for Render "Web Service" (Free Tier requirement)
+const PORT = process.env.PORT || 8080;
+http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end("Userbot is running!");
+}).listen(PORT, () => {
+    console.log(`🌍 Dummy HTTP server listening on port ${PORT}`);
+});
 
 // 1. Initialize Firebase
 if (!admin.apps.length) {
