@@ -1,19 +1,13 @@
-const { Telegraf } = require('telegraf');
-const admin = require("firebase-admin");
+import { Telegraf } from 'telegraf';
+import admin from 'firebase-admin';
 
 // Initialize Firebase Admin (Singleton pattern)
 if (!admin.apps.length) {
-    // Check if we have the service account in environment variables
-    // In production, this should be a JSON string in FIREBASE_SERVICE_ACCOUNT
-    // For now, if missing, this might fail or we need a fallback.
-    // We will assume the user will provide this later or we use a simplified auth.
-
     if (process.env.FIREBASE_SERVICE_ACCOUNT) {
         admin.initializeApp({
             credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT))
         });
     } else {
-        // Fallback or warning - user needs to set this up
         console.warn("FIREBASE_SERVICE_ACCOUNT missing. DB writes might fail.");
     }
 }
@@ -63,7 +57,7 @@ bot.on('message', async (ctx) => {
                 await db.collection('bets').add(betData);
                 await ctx.reply(`✅ Bet recorded: ${betData.match} - ${betData.selection}`);
             } else {
-                await ctx.reply(`⚠️ Parsed, but DB not configured.`);
+                await ctx.reply(`⚠️ Parsed, but DB configured.`);
             }
         } else {
             console.log("Message did not match bet format.");
@@ -74,7 +68,7 @@ bot.on('message', async (ctx) => {
 });
 
 // Netlify Handler
-exports.handler = async (event) => {
+export const handler = async (event) => {
     // Only allow POST
     if (event.httpMethod !== "POST") {
         return { statusCode: 200, body: "Method Not Allowed" };
