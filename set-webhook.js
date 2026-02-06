@@ -1,6 +1,6 @@
 // Run this locally with `node set-webhook.js <YOUR_NETLIFY_URL>`
-const axios = require('axios');
-const dotenv = require('dotenv');
+import axios from 'axios';
+import dotenv from 'dotenv';
 dotenv.config();
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -12,7 +12,9 @@ if (!token || !url) {
     process.exit(1);
 }
 
-const webhookUrl = `${url}/.netlify/functions/telegram-hook`;
+// Ensure no trailing slash
+const cleanUrl = url.replace(/\/$/, "");
+const webhookUrl = `${cleanUrl}/.netlify/functions/telegram-hook`;
 
 console.log(`Setting webhook to: ${webhookUrl}`);
 

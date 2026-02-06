@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: telegram-bet-listener
+    env: node
+    buildCommand: npm install
+    startCommand: npm run start:worker
+    envVars:
+      - key: TELEGRAM_API_ID
+        sync: false
+      - key: TELEGRAM_API_HASH
+        sync: false
+      - key: TELEGRAM_SESSION
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false
