@@ -1,3 +1,77 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: #0B0F19;
+  --color-card-bg: rgba(17, 25, 40, 0.75);
+  --color-neon-blue: #00D1FF;
+  --color-neon-green: #00FF94;
+  --color-neon-purple: #BD00FF;
+  --color-text-muted: #94A3B8;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-slate-100 font-sans;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(0, 209, 255, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(189, 0, 255, 0.1) 0px, transparent 50%);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-outfit {
+    font-family: "Outfit", sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl border border-white/10 shadow-2xl;
+    background-color: var(--color-card-bg);
+  }
+
+  .neon-border-blue {
+    border-color: rgba(0, 209, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
+  }
+}
+
+@layer utilities {
+  .neon-border-green {
+    border-color: var(--bet-green);
+    box-shadow: 0 0 15px rgba(0, 255, 149, 0.1);
+  }
+
+  .neon-border-red {
+    border-color: var(--bet-red);
+    box-shadow: 0 0 15px rgba(255, 70, 70, 0.1);
+  }
+}
+
+@layer components {
+  .neon-border-green {
+    border-color: rgba(0, 255, 148, 0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 148, 0.3);
+  }
+
+  .neon-text-blue {
+    color: var(--color-neon-blue);
+    filter: drop-shadow(0 0 8px rgba(0, 209, 255, 0.5));
+  }
+
+  .neon-text-green {
+    color: var(--color-neon-green);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 148, 0.5));
+  }
+
+  .premium-input {
+    @apply bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 transition-all;
+
+    &:focus {
+      border-color: var(--color-neon-blue);
+      --tw-ring-color: rgba(0, 209, 255, 0.5);
+    }
+  }
+}
