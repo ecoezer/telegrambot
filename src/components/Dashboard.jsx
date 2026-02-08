@@ -195,13 +195,13 @@ export default function Dashboard() {
                         </h3>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="flex flex-col space-y-3">
                         {sortedBets.map((bet) => (
                             <BetCard key={bet.id} bet={bet} />
                         ))}
 
                         {sortedBets.length === 0 && (
-                            <div className="col-span-full py-20 bg-white/5 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-gray-500">
+                            <div className="py-20 bg-white/5 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-gray-500">
                                 <div className="p-4 bg-white/5 rounded-full mb-4">
                                     <svg className="w-12 h-12 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0l-8 8-8-8" />
