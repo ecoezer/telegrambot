@@ -69,9 +69,16 @@ export default function Dashboard() {
 
                 <div className="flex items-center gap-6">
                     <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></div>
                         <span className="text-xs font-semibold text-emerald-400">Live Listening</span>
                     </div>
+
+                    <a href="/stats" className="px-4 py-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-600/20 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        Stats & Sim
+                    </a>
+
                     <button
                         onClick={logout}
                         className="group flex items-center gap-2 hover:text-red-400 transition-all font-semibold text-sm"
@@ -109,46 +116,57 @@ export default function Dashboard() {
                 </div>
 
                 {/* Calculator & Filters */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    <div className="glass-card p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row items-center gap-6">
-                        <div className="flex-1 w-full">
-                            <label className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2 block">Invest per game (€)</label>
-                            <input
-                                type="number"
-                                value={stakeAmount}
-                                onChange={(e) => setStakeAmount(Number(e.target.value))}
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-white font-outfit font-bold text-xl focus:neon-border-blue outline-none transition-all"
-                                placeholder="e.g. 100"
-                            />
-                        </div>
-                        <div className="flex-1 w-full">
-                            <label className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2 block">Time Period</label>
-                            <div className="grid grid-cols-4 gap-2">
-                                {['7d', '30d', '90d', 'all'].map((range) => (
-                                    <button
-                                        key={range}
-                                        onClick={() => setTimeFilter(range)}
-                                        className={`px-2 py-3 rounded-xl border text-[10px] font-bold uppercase transition-all ${timeFilter === range
-                                            ? 'bg-blue-600 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]'
-                                            : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/20'
-                                            }`}
-                                    >
-                                        {range}
-                                    </button>
-                                ))}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div className="glass-card p-6 rounded-3xl border border-white/10 flex flex-col items-center gap-6 md:col-span-2">
+                        <div className="flex-1 w-full flex gap-6">
+                            <div className="flex-1">
+                                <label className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2 block italic opacity-70">Investment per Unit (€)</label>
+                                <input
+                                    type="number"
+                                    value={stakeAmount}
+                                    onChange={(e) => setStakeAmount(Number(e.target.value))}
+                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 text-white font-outfit font-black text-2xl focus:neon-border-blue outline-none transition-all shadow-inner"
+                                    placeholder="e.g. 100"
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <label className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2 block italic opacity-70">Analysis Period</label>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {['7d', '30d', '90d', 'all'].map((range) => (
+                                        <button
+                                            key={range}
+                                            onClick={() => setTimeFilter(range)}
+                                            className={`px-2 py-4 rounded-xl border text-[10px] font-black uppercase transition-all duration-300 ${timeFilter === range
+                                                ? 'bg-blue-600 border-blue-400 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] scale-105'
+                                                : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/30 hover:bg-white/10'
+                                                }`}
+                                        >
+                                            {range}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="glass-card p-6 rounded-3xl border border-blue-500/20 bg-gradient-to-br from-blue-600/10 to-emerald-400/5 flex items-center justify-between group">
-                        <div>
-                            <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-1">Projected {timeFilter.toUpperCase()} Net Profit</p>
-                            <p className={`text-4xl font-bold font-outfit tracking-tighter ${Number(totalProfit) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                    <div className={`glass-card p-6 rounded-3xl border transition-all duration-500 flex items-center justify-between group relative overflow-hidden
+                        ${Number(totalProfit) >= 0
+                            ? 'border-emerald-500/30 bg-gradient-to-br from-emerald-500/20 to-transparent'
+                            : 'border-rose-500/30 bg-gradient-to-br from-rose-500/10 to-transparent'}`}>
+
+                        {/* Animated Glow Back */}
+                        <div className={`absolute -right-10 -bottom-10 w-40 h-40 rounded-full blur-[80px] opacity-20 transition-all duration-700
+                            ${Number(totalProfit) >= 0 ? 'bg-emerald-400 group-hover:bg-emerald-300' : 'bg-rose-500'}`} />
+
+                        <div className="relative z-10">
+                            <p className="text-[10px] text-white/50 font-black uppercase tracking-[0.2em] mb-1">Portfolio Balance</p>
+                            <p className={`text-5xl font-black font-outfit tracking-tighter ${Number(totalProfit) >= 0 ? 'text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]' : 'text-rose-500'}`}>
                                 {Number(totalProfit) > 0 ? '+' : ''}{totalProfit}€
                             </p>
                         </div>
-                        <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                            💰
+                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-all duration-500 shadow-2xl relative z-10
+                            ${Number(totalProfit) >= 0 ? 'bg-emerald-500/20 border border-emerald-500/30' : 'bg-rose-500/10 border border-rose-500/20'}`}>
+                            {Number(totalProfit) >= 0 ? '🚀' : '📉'}
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "2H8dAjCK3hgjUr6bbViC",
+    "match": "Alexandrova VS Mboko",
+    "selection": "Mboko Game Handicap (+4.5) -",
+    "score": "2-0",
+    "db_status": "loss",
+    "correct_status": "win",
+    "timestamp": "2025-10-06T14:00:00.000Z"
+  },
+  {
+    "id": "3WCvSRSeg83GNlx99uJU",
+    "match": "Bublik VS Cazaux",
+    "selection": "Bublik Game Handicap (-3.5) -",
+    "score": "2-0",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-07-26T10:12:06.000Z"
+  },
+  {
+    "id": "H3xtA4j1aC6fCCrWtWVM",
+    "match": "Efes VS Zalgiris",
+    "selection": "Zalgiris Win",
+    "score": "92-82",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2026-02-06T18:30:00.000Z"
+  },
+  {
+    "id": "LdYBTRPRlDOp3BHNO4eK",
+    "match": "Arsenal VS Chelsea",
+    "selection": "BTTS, YES",
+    "score": "1-1",
+    "db_status": "loss",
+    "correct_status": "win",
+    "timestamp": "2026-02-03T21:00:00.000Z"
+  },
+  {
+    "id": "S6LmwhZMNE2c63gvFHrj",
+    "match": "Pellegrino VS Molleker",
+    "selection": "Pellegrino Handicap (-3.5) -",
+    "score": "2-0",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-09-11T13:40:00.000Z"
+  },
+  {
+    "id": "XxQMY0ZABTCaTZMo2nxj",
+    "match": "Osaka VS Sevastova",
+    "selection": "Sevastova Game Handicap (+5.5) -",
+    "score": "2-0",
+    "db_status": "loss",
+    "correct_status": "win",
+    "timestamp": "2025-08-03T19:00:00.000Z"
+  },
+  {
+    "id": "Y3ffda9CglrQo0oyqP24",
+    "match": "Tien VS Rublev",
+    "selection": "Rublev Game Handicap Handicap (-2.5) -",
+    "score": "0-2",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-08-10T17:10:00.000Z"
+  },
+  {
+    "id": "lwBPoc4mXtzWPaywaEma",
+    "match": "Getafe VS Atletico Madrid",
+    "selection": "Getafe Total Over 0.5 Goals",
+    "score": "0-1",
+    "db_status": "loss",
+    "correct_status": "win",
+    "timestamp": "2025-11-23T18:30:00.000Z"
+  },
+  {
+    "id": "nBSmtrz6ZeLtDF1lEMsS",
+    "match": "Lamens VS Kudermetova",
+    "selection": "Lamens Game Handicap (-2.5) -",
+    "score": "2-1",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-07-27T11:22:32.000Z"
+  },
+  {
+    "id": "szTw3GisuT1L7rDVAV84",
+    "match": "Nakashima VS Quinn",
+    "selection": "Nakashima Game Handicap (-2.5) -",
+    "score": "2-0",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-07-22T11:15:34.000Z"
+  },
+  {
+    "id": "x69lxDAM34p743MNaRIW",
+    "match": "Barcelona VS Real Sociedad",
+    "selection": "Barcelona Total Over 2.5 Goals -",
+    "score": "2-1",
+    "db_status": "loss",
+    "correct_status": "win",
+    "timestamp": "2025-09-28T17:30:00.000Z"
+  }
+]

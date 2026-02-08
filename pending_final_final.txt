@@ -1,0 +1,35 @@
+[dotenv@17.2.4] injecting env (10) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+🔍 Fetching pending bets...
+📋 Found 32 pending bets:
+- [J5WtKP4wFPyw9E3x4whD] Hellas Verona VS Sassuolo | Selection: Total Under 2.5 Goals - | Date: 03 Oct 2025
+- [KZ7YHBtuk03ah95pbxo6] Muller VS Nakashima | Selection: Total Under 22.5 Games | Date: 27 Oct 2025
+- [McIl6RUMPaie9gUuOWxf] Bondar VS Juvan | Selection: Juvan Win - | Date: 19 Jul 2025
+- [N7jLrsGEH6Nh4HWl9P7r] ASVEL VS Barcelona | Selection: Barcelona Handicap (-5.5) | Date: 23 Jan 2026
+- [QbOqvNpEdTkhrd6voE7P] Aston Villa VS Man United | Selection: Total Under 3 Goals | Date: 21 Dec 2025
+- [Rt1VsZwacad2mG66JGA7] Marseille VS Liverpool | Selection: Total Over 2.5 Goals | Date: 21 Jan 2026
+- [S70dwCHXVCGSx37SnxEW] Greece VS Italy | Selection: Italy Handicap (+6.5) - | Date: 28 Aug 2025
+- [VcZM1CJH31LO4sv7JgvI] Lech Poznan VS Crvena Zvezda | Selection: Crvena Zvezda Win - | Date: 06 Aug 2025
+- [W0RGcIZvLplKRlTkqLYQ] Watanuki VS Altmaier | Selection: Watanuki Win - | Date: 28 Jul 2025
+- [XHYS6XNm5psaaYDM28iC] Lille VS Brann | Selection: Total Under 3.5 Goals - | Date: 25 Sept 2025
+- [ZKru4IStUQKc3TZ9XAXH] Topuria VS Almakhan | Selection: Topuria Win | Date: 22 Nov 2025
+- [ZPVy9rgU6UIKKxnAGPbw] Musetti VS De Minaur | Selection: Musetti Set Handicap (+1.5) | Date: 11 Nov 2025
+- [ZQ0VJeHsqbP5dUHZuHsE] Sctotland VS Greece | Selection: Total Over 2 Goals - | Date: 09 Oct 2025
+- [ZZqDRzhYUOwnUWhaMCjB] Sinner VS Auger | Selection: Total Over 19.5 Games | Date: 10 Nov 2025
+- [bcDEL6sAS8t4zQvziJql] Milano VS Hapoel | Selection: Hapoel Handicap (-2.5) | Date: 20 Nov 2025
+- [cJ8PrX6074CwoqholCNb] Monchengladbach VS Eintracht | Selection: Total Under 10.5 Corners - | Date: 27 Sept 2025
+- [fiLqIsxIiKDoXIn6rnL6] Fredrikstad VS Midtjylland | Selection: Total Over 2.5 Goals - | Date: 07 Aug 2025
+- [gAqwfkJPxJPq6AxaU4PT] Galatasaray VS Bodo/Glimt | Selection: Galatasaray Total Over 2 Goals - | Date: 22 Oct 2025
+- [gQl7APt655wqvYReOYjy] Crvena Zvezda VS Dubai | Selection: Dubai Handicap (+6.5) | Date: 30 Jan 2026
+- [idZdQOQRzKMmS5gVUNy3] Ulm VS Panionios | Selection: Ulm Handicap (-7.5) - | Date: 07 Oct 2025
+- [jQfChsLRVQYTRCivkcog] Cobolli VS Galerneau | Selection: Cobolli Game Handicap (-4.5) - | Date: 30 Jul 2025
+- [lwBPoc4mXtzWPaywaEma] Getafe VS Atletico Madrid | Selection: Getafe Total Over 0.5 Goals | Date: 23 Nov 2025
+- [mbNr4VU1yliE7BHBU8TK] Malta VS Poland | Selection: Total Over 2.5 Goals | Date: 17 Nov 2025
+- [nBSmtrz6ZeLtDF1lEMsS] Lamens VS Kudermetova | Selection: Lamens Game Handicap (-2.5) - | Date: 27 Jul 2025
+- [tOFyQzCxOtXBk4l3un8L] Man City VS Everton | Selection: Total Over 2.5 Goals - 1,71 | Date: 18 Oct 2025
+- [ulR72R0ryeIjxXkTj5tD] Bulgaria VS Cuba | Selection: Cuba Win - | Date: 16 Jul 2025
+- [vAH3MH3yFgnYbM64JEXI] Alcaraz VS Auger | Selection: Alcaraz Set Handicap (-1.5) | Date: 15 Nov 2025
+- [wQNVIExTIpbXVUvVAVd9] Gaston VS Gombos | Selection: Gaston Game Handicap (-2.5) - | Date: 21 Jul 2025
+- [x69lxDAM34p743MNaRIW] Barcelona VS Real Sociedad | Selection: Barcelona Total Over 2.5 Goals - | Date: 28 Sept 2025
+- [xMb3NZijxjEny6LhwL7g] Man City VS Liverpool | Selection: Total Under 3.5 Goals | Date: 09 Nov 2025
+- [y0b7Y2YITQvomic76hJy] Israel VS Slovenia | Selection: Israel Win - | Date: 04 Sept 2025
+- [zyi0tjZQQQQgt2R03RcN] Crystal Palace VS Tottenham | Selection: BTTS, YES | Date: 28 Dec 2025

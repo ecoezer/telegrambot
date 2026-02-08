@@ -1,0 +1,44 @@
+[
+  {
+    "id": "2NVq89Q1lSwFVNpYq4fs",
+    "match": "Cyprus VS Romania",
+    "selection": "Romania Win -",
+    "status": "loss",
+    "date": "09 Sept 2025"
+  },
+  {
+    "id": "2xdcjKp8uCrRfgT4eKVh",
+    "match": "Chelsea VS Everton",
+    "selection": "Chelsea Win",
+    "status": "win",
+    "date": "13 Dec 2025"
+  },
+  {
+    "id": "h4InNlhHxEP3cMUsDDZy",
+    "match": "Olympiacos VS Paris",
+    "selection": "Olympiacos Handicap (-7.5)",
+    "status": "win",
+    "date": "21 Nov 2025"
+  },
+  {
+    "id": "mv3jHt1KjJjFq1Egk64d",
+    "match": "Napoli VS Juventus",
+    "selection": "Napoli Handicap (0)",
+    "status": "win",
+    "date": "07 Dec 2025"
+  },
+  {
+    "id": "pKpotXKin7ki0rih9341",
+    "match": "Braga VS Santa Clara",
+    "selection": "Braga Handicap (-1)",
+    "status": "loss",
+    "date": "15 Dec 2025"
+  },
+  {
+    "id": "z64q9Df9LZsYfEqYZHIA",
+    "match": "Arsenal VS Liverpool",
+    "selection": "Liverpool Total Over 0.5 Goals",
+    "status": "loss",
+    "date": "08 Jan 2026"
+  }
+]
