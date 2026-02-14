@@ -147,10 +147,18 @@ async function audit() {
             return;
         }
 
-        const isWin = currentStatus === 'win' || currentStatus === 'won';
-        const calcIsWin = calculated === 'win';
+        // normalize calculated to match DB conventions if needed, but 'win'/'loss'/'push' is standard
+        // DB might use 'won' instead of 'win'
+        let normCalc = calculated;
+        if (calculated === 'win') normCalc = 'win'; // distinct from 'won' but let's normalize DB to 'win'
 
-        if (isWin !== calcIsWin) {
+        let dbStatus = currentStatus;
+        if (dbStatus === 'won') dbStatus = 'win';
+        if (dbStatus === 'lost') dbStatus = 'loss';
+        if (dbStatus === 'void') dbStatus = 'push';
+        if (dbStatus === 'refund') dbStatus = 'push';
+
+        if (dbStatus !== normCalc) {
             console.log(`❌ MISMATCH Found: ${bet.match}`);
             console.log(`   Selection: ${bet.selection}`);
             console.log(`   Score: ${bet.score}`);

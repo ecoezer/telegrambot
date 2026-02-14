@@ -16,6 +16,10 @@ export function useBets() {
             }));
             setBets(betsData);
             setLoading(false);
+        }, (error) => {
+            console.error("Error fetching bets:", error);
+            setLoading(false);
+            // Optional: Set an error state here to show in UI
         });
 
         return unsubscribe;

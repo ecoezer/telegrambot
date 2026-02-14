@@ -13,19 +13,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route
             path="/"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
+            element={<Dashboard />}
           />
           <Route
             path="/stats"
-            element={
-              <PrivateRoute>
-                <Stats />
-              </PrivateRoute>
-            }
+            element={<Stats />}
           />
         </Routes>
       </AuthProvider>

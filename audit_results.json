@@ -1,101 +1,209 @@
 [
   {
-    "id": "2H8dAjCK3hgjUr6bbViC",
-    "match": "Alexandrova VS Mboko",
-    "selection": "Mboko Game Handicap (+4.5) -",
-    "score": "2-0",
+    "id": "3l8wKaIt3Dyegq1TgP6j",
+    "match": "Zandschulp VS Fokina",
+    "selection": "Zandschulp Game Handicap (+5.5) -",
+    "score": "1-3",
     "db_status": "loss",
     "correct_status": "win",
-    "timestamp": "2025-10-06T14:00:00.000Z"
+    "timestamp": "2025-07-02T10:02:17.000Z"
   },
   {
-    "id": "3WCvSRSeg83GNlx99uJU",
-    "match": "Bublik VS Cazaux",
-    "selection": "Bublik Game Handicap (-3.5) -",
+    "id": "67MI9VC8HyR2d12c0Oj2",
+    "match": "Slovakia VS France",
+    "selection": "France Total Over 1.5 Goals  -",
+    "score": "2-1",
+    "db_status": "loss",
+    "correct_status": "win",
+    "timestamp": "2025-05-14T10:09:55.000Z"
+  },
+  {
+    "id": "6nm5HPKiu8e2ZtvNj4T0",
+    "match": "Muller VS Mensik",
+    "selection": "Total Over 38.5 Games -",
+    "score": "1-3",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-05-27T07:01:05.000Z"
+  },
+  {
+    "id": "8mlcV36e6A8RwEQFeExC",
+    "match": "Czech Republic VS Faroe Islands",
+    "selection": "Total Over 3 Goals -",
+    "score": "2-1",
+    "db_status": "loss",
+    "correct_status": "push",
+    "timestamp": "2025-03-22T11:42:16.000Z"
+  },
+  {
+    "id": "ANsJR8ZcUcmQHAOSyBwy",
+    "match": "Swiatek VS Collins",
+    "selection": "Swiatek Game Handicap (-3.5) -",
     "score": "2-0",
     "db_status": "win",
     "correct_status": "loss",
-    "timestamp": "2025-07-26T10:12:06.000Z"
+    "timestamp": "2025-07-05T10:12:44.000Z"
   },
   {
-    "id": "H3xtA4j1aC6fCCrWtWVM",
-    "match": "Efes VS Zalgiris",
-    "selection": "Zalgiris Win",
-    "score": "92-82",
+    "id": "B9BNxY7yIA88oE7qocWe",
+    "match": "Medvedev VS Nakashima",
+    "selection": "Medvedev Handicap (-2.5) -",
+    "score": "2-1",
     "db_status": "win",
     "correct_status": "loss",
-    "timestamp": "2026-02-06T18:30:00.000Z"
+    "timestamp": "2025-04-29T10:40:09.000Z"
   },
   {
-    "id": "LdYBTRPRlDOp3BHNO4eK",
-    "match": "Arsenal VS Chelsea",
-    "selection": "BTTS, YES",
-    "score": "1-1",
+    "id": "Ea3afxMfaUFFF6eEtaEA",
+    "match": "Medvedev VS Struff",
+    "selection": "Struff Handicap (+4.5) -",
+    "score": "6-3, 6-2",
     "db_status": "loss",
     "correct_status": "win",
-    "timestamp": "2026-02-03T21:00:00.000Z"
+    "timestamp": "2025-02-14T12:08:48.000Z"
   },
   {
-    "id": "S6LmwhZMNE2c63gvFHrj",
-    "match": "Pellegrino VS Molleker",
-    "selection": "Pellegrino Handicap (-3.5) -",
+    "id": "FJwfuJwhbi7U7sDG848C",
+    "match": "Medvedev VS Muller",
+    "selection": "Medvedev Handicap (-2.5) -",
+    "score": "2-1",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-04-09T11:02:00.000Z"
+  },
+  {
+    "id": "HrBwpNmGRAhUpPPm0dCK",
+    "match": "Fils VS Medvedev",
+    "selection": "Total Over 20.5 Points -",
+    "score": "6-4 2-6 7-6",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-03-13T10:34:23.000Z"
+  },
+  {
+    "id": "JtTU1w6HTb7WYRBJvTIZ",
+    "match": "Moutet VS Griekspoor",
+    "selection": "Griekspoor Handicap (-2.5) -",
     "score": "2-0",
     "db_status": "win",
     "correct_status": "loss",
-    "timestamp": "2025-09-11T13:40:00.000Z"
+    "timestamp": "2025-06-28T10:42:37.000Z"
   },
   {
-    "id": "XxQMY0ZABTCaTZMo2nxj",
-    "match": "Osaka VS Sevastova",
-    "selection": "Sevastova Game Handicap (+5.5) -",
-    "score": "2-0",
+    "id": "QbOqvNpEdTkhrd6voE7P",
+    "match": "Aston Villa VS Man United",
+    "selection": "Total Under 3 Goals",
+    "score": "2-1",
+    "db_status": "loss",
+    "correct_status": "push",
+    "timestamp": "2025-12-21T17:30:00.000Z"
+  },
+  {
+    "id": "Qr9Yje3Hpm6I4buszEZM",
+    "match": "Canada VS Switzerland",
+    "selection": "Total Under 6 Goals",
+    "score": "5-1",
+    "db_status": "loss",
+    "correct_status": "push",
+    "timestamp": "2026-02-13T21:10:00.000Z"
+  },
+  {
+    "id": "Selt4wAiNACQfG41YKHH",
+    "match": "Sweden VS Slovakia",
+    "selection": "Slovakia Total Over 1.5 Goals -",
+    "score": "5-0",
     "db_status": "loss",
     "correct_status": "win",
-    "timestamp": "2025-08-03T19:00:00.000Z"
+    "timestamp": "2025-05-09T10:48:30.000Z"
   },
   {
-    "id": "Y3ffda9CglrQo0oyqP24",
-    "match": "Tien VS Rublev",
-    "selection": "Rublev Game Handicap Handicap (-2.5) -",
+    "id": "VXMZR5AaRf0trlFZkn9k",
+    "match": "Bu VS Darderi",
+    "selection": "Darderi Handicap (-2.5) -",
     "score": "0-2",
     "db_status": "win",
     "correct_status": "loss",
-    "timestamp": "2025-08-10T17:10:00.000Z"
+    "timestamp": "2025-05-07T10:24:20.000Z"
   },
   {
-    "id": "lwBPoc4mXtzWPaywaEma",
-    "match": "Getafe VS Atletico Madrid",
-    "selection": "Getafe Total Over 0.5 Goals",
-    "score": "0-1",
-    "db_status": "loss",
-    "correct_status": "win",
-    "timestamp": "2025-11-23T18:30:00.000Z"
-  },
-  {
-    "id": "nBSmtrz6ZeLtDF1lEMsS",
-    "match": "Lamens VS Kudermetova",
-    "selection": "Lamens Game Handicap (-2.5) -",
-    "score": "2-1",
+    "id": "WH6tTeC7BDwEEyZWWiB2",
+    "match": "Bublik VS Draper",
+    "selection": "Total Over 32.5 Games -",
+    "score": "3-1",
     "db_status": "win",
     "correct_status": "loss",
-    "timestamp": "2025-07-27T11:22:32.000Z"
+    "timestamp": "2025-06-02T10:43:13.000Z"
   },
   {
-    "id": "szTw3GisuT1L7rDVAV84",
-    "match": "Nakashima VS Quinn",
-    "selection": "Nakashima Game Handicap (-2.5) -",
+    "id": "a1B0vOh9paKARJJeF4Zi",
+    "match": "Como 🇮🇹 VS Genoa 🇮🇹",
+    "selection": "Total Over 2 Goals -",
+    "score": "1-1",
+    "db_status": "loss",
+    "correct_status": "push",
+    "timestamp": "2025-09-15T19:45:00.000Z"
+  },
+  {
+    "id": "aCfEYxZTiVXDv4AEdTHj",
+    "match": "Lys VS Paolini",
+    "selection": "Paolini Handicap (-3.5) -",
+    "score": "0-2",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-04-15T10:46:48.000Z"
+  },
+  {
+    "id": "ac8isk71iwNf9kJ5PCti",
+    "match": "Musetti VS Tiafoe",
+    "selection": "Total Over 36.5 Games -",
+    "score": "3-1",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-06-03T10:36:21.000Z"
+  },
+  {
+    "id": "l9QTMKuslb0PbfizSavb",
+    "match": "Maroszan VS Alcaraz",
+    "selection": "Total Over 29.5 Games -",
+    "score": "3-1",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-05-28T10:44:52.000Z"
+  },
+  {
+    "id": "vvitKJ1vbSRfb920ZWUk",
+    "match": "Tottenham VS Newcastle",
+    "selection": "Total Under 3 Goals",
+    "score": "1-2",
+    "db_status": "loss",
+    "correct_status": "push",
+    "timestamp": "2026-02-10T20:30:00.000Z"
+  },
+  {
+    "id": "whh0D28jIfoGXntSnTKe",
+    "match": "De Minaur VS Humbert",
+    "selection": "De Minaur Handicap (-2.5)",
     "score": "2-0",
     "db_status": "win",
     "correct_status": "loss",
-    "timestamp": "2025-07-22T11:15:34.000Z"
+    "timestamp": "2026-02-14T15:00:00.000Z"
   },
   {
-    "id": "x69lxDAM34p743MNaRIW",
-    "match": "Barcelona VS Real Sociedad",
-    "selection": "Barcelona Total Over 2.5 Goals -",
-    "score": "2-1",
+    "id": "xaxX00PBNaqmaPUtdxLY",
+    "match": "Mpetshi VS Auger",
+    "selection": "Mpetshi Handicap (+3.5) -",
+    "score": "0-2",
     "db_status": "loss",
     "correct_status": "win",
-    "timestamp": "2025-09-28T17:30:00.000Z"
+    "timestamp": "2025-05-21T08:56:46.000Z"
+  },
+  {
+    "id": "yuCgQmDqph77YV4qzDxp",
+    "match": "Tsitsipas VS Fils",
+    "selection": "Fils Win -",
+    "score": "0-0",
+    "db_status": "win",
+    "correct_status": "loss",
+    "timestamp": "2025-04-18T10:06:02.000Z"
   }
 ]

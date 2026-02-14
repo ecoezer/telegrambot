@@ -1,157 +1,150 @@
-[dotenv@17.2.4] injecting env (10) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
-🔍 Fetching pending bets...
-📋 Found 154 pending bets:
-- [4Hy1CGW6HqRqO5oipm8T] Serbia VS Estonia | Selection: Estonia Handicap (+30.5) - | Date: 27 Aug 2025
-- [4k40pn2mE5TkMT8mdnov] Brentford VS Leeds | Selection: Total Over 2.5 Goals | Date: 14 Dec 2025
-- [5ZQ4SdcmbJ0ZOwmtACwL] Kym VS Hemery | Selection: Kym Set Handicap (-1.5) - | Date: 15 Jul 2025
-- [5m2pFYrynkMt2w3xbFzz] Man United VS Newcastle | Selection: Total Over 2.5 Goals | Date: 26 Dec 2025
-- [60xLbC5VVyD4NOAGaMZw] Brighton 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Fulham 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: BTTS, YES - | Date: 16 Aug 2025
-- [6I0DU0i0fHAOjL6hZQ1W] Man United 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Arsenal 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: BTTS, YES - | Date: 17 Aug 2025
-- [6NSGuTZXtNzeMRrOSFrX] Fenerbahce VS Stuttgart | Selection: Total Over 2.5 Goals | Date: 23 Oct 2025
-- [6UYaDlErHzgpachun0se] Olympiacos VS Valencia | Selection: Olympiacos Handicap (-4.5) | Date: 16 Dec 2025
-- [6dVCmbRTIXSQq38w7XFe] Tottenham VS Liverpool | Selection: Total Over 2.5 Goals | Date: 20 Dec 2025
-- [6ri6Hjm7OlkkxtUmS9jn] Crystal Palace VS Brentford | Selection: BTTS, YES | Date: 01 Nov 2025
-- [6wiAzvPJxdFFe3ZlCAgc] Porto VS Rangers | Selection: Total Under 3.5 Goals | Date: 29 Jan 2026
-- [7OxfVzKWjQbm7pkX5Oji] Tiafoe VS Rune | Selection: Tiafoe Win - | Date: 13 Aug 2025
-- [7VaHLV05Hg1VQblWRD5T] Sevilla VS Elche | Selection: Total Over 2 Goals - | Date: 12 Sept 2025
-- [8jGDF0eOxv8z0VopX7Xg] Dortmund VS Bodo/Glimt | Selection: Total Over 3.5 Goals | Date: 10 Dec 2025
-- [9357Z9yk5uHHlF9azZdl] Sunderland VS Everton | Selection: BTTS, YES | Date: 03 Nov 2025
-- [9BUFudkcLmsTCDFSPXLR] Roma VS Genoa | Selection: Roma Win | Date: 29 Dec 2025
-- [9bZLNRhm3uDMMlbQyI3p] Eintracht VS Dortmund | Selection: Total Over 2.5 Goals | Date: 09 Jan 2026
-- [9vTcywmG41pIooOlfO63] Newcastle VS Leeds | Selection: Newcastle Win | Date: 07 Jan 2026
-- [AIyMGRBF0H0kEQWV2bnf] Iceland VS Slovenia | Selection: Slovenia Handicap (-13.5) - | Date: 02 Sept 2025
-- [ALwFQ2uM19GhrKl8PMwA] Lithuania VS Sweden | Selection: Lithuania Handicap (-6.5) - | Date: 03 Sept 2025
-- [AYyp1mpm63QVXdhXw9LG] HJK VS Inter Turku | Selection: Total Over 2.5 Goals - | Date: 04 Aug 2025
-- [BpeWmsMTriu23DBCdkH2] Moutet VS Brooksby | Selection: Brooksby Win - | Date: 29 Jul 2025
-- [CAYkBKzllEbst1vNUXEo] Atalanta VS Torino | Selection: Total Over 2.5 Goals | Date: 10 Jan 2026
-- [DEtS7umErRFmnU5K0jLS] Kopenhagen VS Dortmund | Selection: Total Under 3 Goals - | Date: 21 Oct 2025
-- [Du4sWVBpkJIn2rf3jFN6] Levante VS Real Madrid | Selection: Levante Total Over 0.5 Goals - | Date: 23 Sept 2025
-- [DuBznHWRtk8lLFxwdQRj] Dubai VS Zalgiris | Selection: Dubai Win | Date: 14 Nov 2025
-- [EFq3ysglcfhCgfcqFsGm] Wolves VS Burnley | Selection: Total Under 2.5 Goals | Date: 26 Oct 2025
-- [EVfdAs7m7dPBtLcxYVjV] Giron VS Fokina | Selection: Fokina Win - | Date: 15 Oct 2025
-- [Ezxa2qolaycYC6EO1AQR] Lille VS Marseille | Selection: Total Over 2.5 Goals | Date: 05 Dec 2025
-- [FBTL4hmPe6FHDlpJfIIr] Man City VS Man United | Selection: Man City Win - | Date: 14 Sept 2025
-- [FowojTHpSf3Ta2M0wg1r] ASVEL VS Hapoel | Selection: Hapoel Handicap (-6.5) | Date: 16 Jan 2026
-- [G1unthDzQE0aF5924NMp] Fulham VS Brighton | Selection: BTTS, YES | Date: 24 Jan 2026
-- [G9wrGBuT1JTU0ZOlxWe5] Denmark VS Scotland | Selection: Denmark Total Over 1.5 Goals - | Date: 05 Sept 2025
-- [GEyFkg2UmZ4wKDypuF6e] Inter Milan VS Napoli | Selection: Inter Milan Win | Date: 11 Jan 2026
-- [GHg2ymWo0uJ6ilA4m5Ip] Khachanov VS De Minaur | Selection: De Minaur Win | Date: 30 Oct 2025
-- [Gupp4yqZY0CEUw8qqoGG] Tiafoe VS Humbert | Selection: Humbert Win - | Date: 11 Aug 2025
-- [HLMahnWMU5alC8EvBvYk] Real Madrid 🇪🇸 VS Osasuna 🇪🇸 | Selection: Real Madrid Handicap (-1.5) - | Date: 19 Aug 2025
-- [He7nHFMotvAweJdDatqq] Collignon VS Kopriva | Selection: Kopriva Win - | Date: 20 Jul 2025
-- [Hj23bIrKanSTUBvM40V5] Dortmund VS Werder Bremen | Selection: Total Under 3.5 Goals | Date: 13 Jan 2026
-- [Igi11s3SzxSlgmW2TPBq] Bournemouth VS Arsenal | Selection: Total Over 2.5 Goals | Date: 03 Jan 2026
-- [IsiQxRP6nfXSzljtAwO8] Sunderland 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Brentford 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: BTTS, YES - | Date: 30 Aug 2025
-- [J3KzTGhqgdgitKAAohLR] Napoli VS Parma | Selection: Total Over 2.5 Goals | Date: 14 Jan 2026
-- [J4Ed3vwCTO598RSqWobc] Korda VS Kecmanovic | Selection: Kecmanovic Win - | Date: 21 Aug 2025
-- [J5WtKP4wFPyw9E3x4whD] Hellas Verona VS Sassuolo | Selection: Total Under 2.5 Goals - | Date: 03 Oct 2025
-- [JeDXkE0jRGmmyGmcgGNf] Liverpool 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Arsenal 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: BTTS, YES - | Date: 31 Aug 2025
-- [JoIkNAzyS2lRNwcS0dPR] Barcelona VS PSG | Selection: Total Under 3.5 Goals - | Date: 01 Oct 2025
-- [K5CTeeSqx4tzuctnHOUm] Zhu VS Lamens | Selection: Lamens Win - | Date: 31 Jul 2025
-- [KDmDLbQrvQamhqSlEx9S] Diallo 🇨🇦 VS Medejovic 🇷🇸 | Selection: Medjedovic Win - | Date: 20 Aug 2025
-- [KZ7YHBtuk03ah95pbxo6] Muller VS Nakashima | Selection: Total Under 22.5 Games | Date: 27 Oct 2025
-- [KfXsuYMkOQgZNmHdCUfH] Bournemouth VS Newcastle | Selection: Total Under 3 Goals - | Date: 21 Sept 2025
-- [LgF3ml3thHtzq5L9mULC] Arsenal VS Crystal Palace | Selection: Crystal Palace Total Over 0.5 Goals | Date: 23 Dec 2025
-- [M0u1Gp6VWNX07obuhGtG] Bouzkova VS Valentova | Selection: Bouzkova Win - | Date: 25 Jul 2025
-- [MDjCi9HHARd1d10wX0oO] Iceland VS France | Selection: Total Over 2.5 Goals - | Date: 13 Oct 2025
-- [MQXKziCQdZPUrSV8Z8M2] Man United VS West Ham | Selection: Total Under 3.5 Goals | Date: 04 Dec 2025
-- [MVzTuWhtNah3tu8wyVcH] Dortmund VS Villarreal | Selection: Total Over 2.5 Goals | Date: 25 Nov 2025
-- [McIl6RUMPaie9gUuOWxf] Bondar VS Juvan | Selection: Juvan Win - | Date: 19 Jul 2025
-- [N7jLrsGEH6Nh4HWl9P7r] ASVEL VS Barcelona | Selection: Barcelona Handicap (-5.5) | Date: 23 Jan 2026
-- [NTgp9pkBFoxJsGoQ5qzK] Alcaraz VS Musetti | Selection: Total Under 21.5 Games | Date: 13 Nov 2025
-- [OXKO6BBl2V6pEgCerMpy] Basel VS FCSB | Selection: BTTS, YES | Date: 06 Nov 2025
-- [OYIB2wUUFogBkkgOVAW0] Getafe VS Elche | Selection: Total Over 1.5 Goals | Date: 28 Nov 2025
-- [PHDICGGZ80GQiQbA1zY0] Man City VS Napoli | Selection: Man City Win - | Date: 18 Sept 2025
-- [PctvZKYbKJh9WsXd0f9r] Sinner VS Zverev | Selection: Total Over 20 Games | Date: 12 Nov 2025
-- [Pq6rd4s0W3b0TbuYTp8G] Moutet VS Bublik | Selection: Bublik Win | Date: 29 Oct 2025
-- [PzkaVZuUsDO4Ng5L7Z0d] Popyrin VS Rublev | Selection: Rublev Game Handicap (-2.5) - | Date: 12 Aug 2025
-- [Q6pgwyn6I1mpqGaHmhmZ] Tien VS Rublev | Selection: Rublev Win | Date: 28 Oct 2025
-- [QbOqvNpEdTkhrd6voE7P] Aston Villa VS Man United | Selection: Total Under 3 Goals | Date: 21 Dec 2025
-- [QbkJbcCU1zQKQMuyIjUZ] Lazio VS Como | Selection: BTTS, NO | Date: 19 Jan 2026
-- [R62eYbLIIgv6HRRYODsT] Estonia VS Latvia | Selection: Latvia Handicap (-13.5) - | Date: 29 Aug 2025
-- [RThzpC3uW6sazfEAEM5r] Knicks VS Cavaliers | Selection: Cavaliers Handicap (+6.5) | Date: 25 Dec 2025
-- [RogvFs7EkEs0lI5KntuP] Chelsea VS Aston Villa | Selection: BTTS, YES | Date: 27 Dec 2025
-- [Rt1VsZwacad2mG66JGA7] Marseille VS Liverpool | Selection: Total Over 2.5 Goals | Date: 21 Jan 2026
-- [S6LmwhZMNE2c63gvFHrj] Pellegrino VS Molleker | Selection: Pellegrino Handicap (-3.5) - | Date: 11 Sept 2025
-- [S70dwCHXVCGSx37SnxEW] Greece VS Italy | Selection: Italy Handicap (+6.5) - | Date: 28 Aug 2025
-- [SAfWEAkfA2BGSqkH4Mqi] Germany VS Slovenia | Selection: Germany Handicap (-10.5) - | Date: 10 Sept 2025
-- [SgCicqYfm41QF7sQTBzG] Stricked VS Herbert | Selection: Stricker Win - | Date: 14 Jul 2025
-- [U2CAWrn2CudljJwEGw8D] Everton VS West Ham | Selection: BTTS, YES - | Date: 29 Sept 2025
-- [U3BeauBmJTjNDjkUuA0B] St Pauli VS Leipzig | Selection: Leipzig Win | Date: 27 Jan 2026
-- [U9JoQCrf9SOirWhl274A] Lithuania VS Latvia | Selection: Total Over 162.5 Points - | Date: 06 Sept 2025
-- [UF3OldvE9CGGT0Ka8wUr] Indiana Pacers vs Charlotte Hornets | Selection: Under 239.5 points | Date: 20 Nov 2025
-- [UObKeoSeuvOW3OcRHYFm] Napoli VS Pisa | Selection: Total Over 2.5 Goals - | Date: 22 Sept 2025
-- [UgzU6dKyGZUGbKjZG7sh] Wu VS Popyrin | Selection: Popyrin Win - | Date: 23 Jul 2025
-- [UhH4CswqRjiYIohGkD5e] Bodo/Glimt VS Man City | Selection: Total Over 3.5 Goals | Date: 20 Jan 2026
-- [V3cteZrJXGDa6a64ljFM] Barcelona VS Eintracht | Selection: Total Under 4.5 Goals | Date: 09 Dec 2025
-- [VcZM1CJH31LO4sv7JgvI] Lech Poznan VS Crvena Zvezda | Selection: Crvena Zvezda Win - | Date: 06 Aug 2025
-- [W0RGcIZvLplKRlTkqLYQ] Watanuki VS Altmaier | Selection: Watanuki Win - | Date: 28 Jul 2025
-- [X5dpfeEl3hi4Df02vD5F] Fucsovics VS Shapovalov | Selection: Shapovalov Win - | Date: 26 Aug 2025
-- [XHYS6XNm5psaaYDM28iC] Lille VS Brann | Selection: Total Under 3.5 Goals - | Date: 25 Sept 2025
-- [XiuDlHID3sZ79gI8NqPC] Greece VS Denmark | Selection: Total Over 2 Goals - | Date: 08 Sept 2025
-- [XxQMY0ZABTCaTZMo2nxj] Osaka VS Sevastova | Selection: Sevastova Game Handicap (+5.5) - | Date: 03 Aug 2025
-- [Y3ffda9CglrQo0oyqP24] Tien VS Rublev | Selection: Rublev Game Handicap Handicap (-2.5) - | Date: 10 Aug 2025
-- [YHVDt9Idd6nszBXjogm6] ASVEL VS Bayern | Selection: Bayern Win | Date: 17 Dec 2025
-- [YRoCIpXzbtLdtOWADQKl] West Ham VS Brighton | Selection: Total Over 2.5 Goals | Date: 30 Dec 2025
-- [YS6I0sNqnofTYOaAfdkS] Stuttgart VS St Pauli | Selection: Total Over 2.5 Goals - | Date: 19 Sept 2025
-- [YW6fLGYoMib6biPVrcXp] Arsenal VS Athletic Bilbao | Selection: Arsenal Handicap (-1) - | Date: 09 Aug 2025
-- [YaAbnE9hr4n1qVnLSFp4] West Ham VS Tottenham | Selection: Total Over 2.5 Goals - | Date: 13 Sept 2025
-- [ZKru4IStUQKc3TZ9XAXH] Topuria VS Almakhan | Selection: Topuria Win | Date: 22 Nov 2025
-- [ZPVy9rgU6UIKKxnAGPbw] Musetti VS De Minaur | Selection: Musetti Set Handicap (+1.5) | Date: 11 Nov 2025
-- [ZQ0VJeHsqbP5dUHZuHsE] Sctotland VS Greece | Selection: Total Over 2 Goals - | Date: 09 Oct 2025
-- [ZZqDRzhYUOwnUWhaMCjB] Sinner VS Auger | Selection: Total Over 19.5 Games | Date: 10 Nov 2025
-- [Zk7kI9Jvp2yIqJT2KYS5] Leeds 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Everton 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: BTTS, YES - | Date: 18 Aug 2025
-- [a1B0vOh9paKARJJeF4Zi] Como 🇮🇹 VS Genoa 🇮🇹 | Selection: Total Over 2 Goals - | Date: 15 Sept 2025
-- [aphoil50o3PQvoU5wUyC] Sevastova VS Pegula | Selection: Sevastova Game Handicap (+5.5) - | Date: 01 Aug 2025
-- [bcDEL6sAS8t4zQvziJql] Milano VS Hapoel | Selection: Hapoel Handicap (-2.5) | Date: 20 Nov 2025
-- [cJ8PrX6074CwoqholCNb] Monchengladbach VS Eintracht | Selection: Total Under 10.5 Corners - | Date: 27 Sept 2025
-- [cQCKyRmhpKkGMc7d6NDS] Kairat Almaty VS Real Madrid | Selection: Total Over 3.5 Goals - | Date: 30 Sept 2025
-- [cR16HPkOi80XSruTgF8k] Man City VS Bournemouth | Selection: Total Over 3 Goals | Date: 02 Nov 2025
-- [cU3gnzDnfNpyYKxtq6aO] Fulham VS Nottingham | Selection: BTTS, YES | Date: 22 Dec 2025
-- [cjJOdGzUo4678mcSY4Ak] Feyenoord VS Aston Villa | Selection: Total Over 2.5 Goals - | Date: 02 Oct 2025
-- [epegtP7x2oGtAQBdC0uy] Korda VS Musetti | Selection: Musetti Win | Date: 07 Nov 2025
-- [fiLqIsxIiKDoXIn6rnL6] Fredrikstad VS Midtjylland | Selection: Total Over 2.5 Goals - | Date: 07 Aug 2025
-- [gAqwfkJPxJPq6AxaU4PT] Galatasaray VS Bodo/Glimt | Selection: Galatasaray Total Over 2 Goals - | Date: 22 Oct 2025
-- [gDw8Ov6nwtVVzisOOI9r] Man United VS Sunderland | Selection: Man United Win - | Date: 04 Oct 2025
-- [gQl7APt655wqvYReOYjy] Crvena Zvezda VS Dubai | Selection: Dubai Handicap (+6.5) | Date: 30 Jan 2026
-- [gmgWY1V397LxfpntGniC] Osasuna VS Levante | Selection: BTTS, NO | Date: 08 Dec 2025
-- [hJDu3wNEhjOuBji9L4Xq] Leicester VS West Brom | Selection: Total Under 2.5 Goals | Date: 05 Jan 2026
-- [hRkGavNurGkfG39B66Jl] Wang VS Bejlek | Selection: Wang Win - | Date: 24 Jul 2025
-- [hjkH0HSaDXiXbXnELf6B] Latvia VS England | Selection: Total Over 3.5 Goals - | Date: 14 Oct 2025
-- [iMLFTCk6d4HD4KhNdiQt] Shelton VS Lehecka | Selection: Shelton Win - | Date: 14 Aug 2025
-- [idZdQOQRzKMmS5gVUNy3] Ulm VS Panionios | Selection: Ulm Handicap (-7.5) - | Date: 07 Oct 2025
-- [jQfChsLRVQYTRCivkcog] Cobolli VS Galerneau | Selection: Cobolli Game Handicap (-4.5) - | Date: 30 Jul 2025
-- [jVT3jZ7QuSbb344RPOlX] Bournemouth 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Wolves 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: Total Over 2.5 Goals - | Date: 23 Aug 2025
-- [kusQLYDsZ9ElSh8E3nBq] Randers VS Odense | Selection: Total Over 2.5 Goals | Date: 24 Nov 2025
-- [lwBPoc4mXtzWPaywaEma] Getafe VS Atletico Madrid | Selection: Getafe Total Over 0.5 Goals | Date: 23 Nov 2025
-- [lzK71rJd3ZsYWNcoaVKm] Knights VS Predators | Selection: Total Over 5.5 Goals | Date: 31 Dec 2025
-- [mbNr4VU1yliE7BHBU8TK] Malta VS Poland | Selection: Total Over 2.5 Goals | Date: 17 Nov 2025
-- [nBSmtrz6ZeLtDF1lEMsS] Lamens VS Kudermetova | Selection: Lamens Game Handicap (-2.5) - | Date: 27 Jul 2025
-- [oQEG5gt6KBHHJ22lu8LV] Tottenham VS Villarreal | Selection: Total Over 2.5 Goals - | Date: 16 Sept 2025
-- [oiSdbOQl15cpyKtPXW5x] West Ham VS Bretnford | Selection: Total Over 2.5 Goals - 1,89 | Date: 20 Oct 2025
-- [owZNTbAX4Vv1TjmhF6Ha] Real Betis VS Nottingham | Selection: BTTS, YES - | Date: 24 Sept 2025
-- [qr1Y6xCJLLPBIsF5DKDp] Tottenham VS Aston Villa | Selection: BTTS, YES - 1,69 | Date: 19 Oct 2025
-- [qzADh8MsChL165doZ4ph] Liverpool VS Real Madrid | Selection: Total Under 3.5 Goals | Date: 04 Nov 2025
-- [rQ3WJhzvlSsfokVYd93C] Liverpool VS Atletico Madrid | Selection: Total Over 2.5 Goals - | Date: 17 Sept 2025
-- [rsVYNReHfC0EfyGpB9WI] Birmingham VS Ipswich | Selection: Total Under 10.5 Corners - | Date: 08 Aug 2025
-- [sOdYQncx84NWWgqw5dJz] Qarabag VS Chelsea | Selection: Qarabag Total Over 0.5 Goals | Date: 05 Nov 2025
-- [sVvK88hRCDqpqGyVseNS] Italy VS Slovenia | Selection: Italy Win - | Date: 07 Sept 2025
-- [sWgSoI23S7X5qv9H83tI] Kovacevic VS Wong | Selection: Kovacevic Win - | Date: 25 Aug 2025
-- [szTw3GisuT1L7rDVAV84] Nakashima VS Quinn | Selection: Nakashima Game Handicap (-2.5) - | Date: 22 Jul 2025
-- [tM8t0LMoJj2mWAnBCRoQ] Dynamo Kyiv VS Pafos | Selection: Dinamo Kyiv Win - | Date: 05 Aug 2025
-- [tOFyQzCxOtXBk4l3un8L] Man City VS Everton | Selection: Total Over 2.5 Goals - 1,71 | Date: 18 Oct 2025
-- [tYIqFSU5eDcrv1MqKSHi] Austria VS Latvia | Selection: Latvia Handicap (-7.5) | Date: 01 Dec 2025
-- [tyyFmhFgKGr0Yo65bkT4] Liverpool🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Bournemouth🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: Liverpool Handicap (-1.5) - | Date: 15 Aug 2025
-- [ulR72R0ryeIjxXkTj5tD] Bulgaria VS Cuba | Selection: Cuba Win - | Date: 16 Jul 2025
-- [vAH3MH3yFgnYbM64JEXI] Alcaraz VS Auger | Selection: Alcaraz Set Handicap (-1.5) | Date: 15 Nov 2025
-- [vvG6aLBw7UJ8qepnuyVe] Sunderland VS Man City | Selection: Total Over 2.5 Goals | Date: 01 Jan 2026
-- [vxqjnRUrNVH39wGjLG9Y] West Ham 🏴󠁧󠁢󠁥󠁮󠁧󠁿 VS Chelsea 🏴󠁧󠁢󠁥󠁮󠁧󠁿 | Selection: Total Over 2.5 Goals - | Date: 22 Aug 2025
-- [w0UI8SgILgdVDERvJvac] Penguins VS Predators | Selection: Total Under 6.5 Goals | Date: 16 Nov 2025
-- [wQNVIExTIpbXVUvVAVd9] Gaston VS Gombos | Selection: Gaston Game Handicap (-2.5) - | Date: 21 Jul 2025
-- [x69lxDAM34p743MNaRIW] Barcelona VS Real Sociedad | Selection: Barcelona Total Over 2.5 Goals - | Date: 28 Sept 2025
-- [xCryamQ0WFM0zKzxGeae] Leeds VS West Ham | Selection: BTTS, YES | Date: 24 Oct 2025
-- [xMb3NZijxjEny6LhwL7g] Man City VS Liverpool | Selection: Total Under 3.5 Goals | Date: 09 Nov 2025
-- [xnsgIa2jqLS1q8xOSA72] Hapoel VS Maccabi | Selection: Maccabi Handicap (+8.5) - | Date: 08 Oct 2025
-- [y0b7Y2YITQvomic76hJy] Israel VS Slovenia | Selection: Israel Win - | Date: 04 Sept 2025
-- [y2Wq574QQ8MhCCVpeoYH] Netherlands 🇳🇱 VS France 🇫🇷 | Selection: BTTS, YES - | Date: 13 Jul 2025
-- [zyi0tjZQQQQgt2R03RcN] Crystal Palace VS Tottenham | Selection: BTTS, YES | Date: 28 Dec 2025
+1lymv2VwpqRvpI6PeCDQ|PSV VS Arsenal|Arsenal Win -|04 Mar 2025
+2Ia7EIEglx293iY7ZOgC|Norway VS Czech Republic|Total Over 5.5 Goals -|11 May 2025
+2Xhu7vEbITpI86clz1Gd|Poland 🇵🇱 VS Denmark 🇩🇰|Total Under 3 Goals -|12 Jul 2025
+2gZX9OBNRMG6dEdZHlXh|Chelsea VS Liverpool|Total Under 3.5 Goals -|04 May 2025
+2zUbQPPXfUFjX6F6yFui|Valencia VS Espanyol|BTTS, YES -|22 Apr 2025
+3crxCFBrSDC3hvGtO7lD|Elfsborg VS Hacken|Elfsborg Win -|06 Jul 2025
+3fEnx7lmwYbu02o0kAJS|Manchester City VS Brighton|Manchester City Win -|15 Mar 2025
+3l8wKaIt3Dyegq1TgP6j|Zandschulp VS Fokina|Zandschulp Game Handicap (+5.5) -|02 Jul 2025
+3ybuk2mpQ9SPAXntYGQ5|Galatasaray VS Alkmaar|Total Over 3.5 Goals -|20 Feb 2025
+5hGQ5wX79ZQTcC6ENjZp|Tien VS Opelka|Tien Win -|08 May 2025
+65XaHLZwFnGCFSlltFbL|Malta VS Finland|Finland Win -|21 Mar 2025
+67MI9VC8HyR2d12c0Oj2|Slovakia VS France|France Total Over 1.5 Goals  -|14 May 2025
+6C0Fp0qkIK9AH9OqJbXR|Newcastle VS Crystal Palace|BTTS, YES -|16 Apr 2025
+6PJMQTMwHWBa4WqhDoyE|Genoa VS AC Milan|Total Over 2.5 Goals -|05 May 2025
+6Y9nh8lrCaREAOdoHCys|Ausgburg VS Bayern|Total Over 2.5 Goals -|04 Apr 2025
+6ZJfnNqGBDJZGGZEMIcg|Muchova VS Maria|Muchova Game Handicap (-2.5) -|11 Jun 2025
+6btb09XG3IuyyVTuXf3y|3DMAX VS pain Gaming|3DMAX Win -|14 Jun 2025
+6nm5HPKiu8e2ZtvNj4T0|Muller VS Mensik|Total Over 38.5 Games -|27 May 2025
+8cDE5zyj3hxnCv4oEfdP|Tiafoe VS Altmaier|Total Over 38.5 Games -|01 Jun 2025
+8mlcV36e6A8RwEQFeExC|Czech Republic VS Faroe Islands|Total Over 3 Goals -|22 Mar 2025
+8rB9pjvT4VB4xlsSK9iB|PSG VS Inter Miami|BTTS, YES -|29 Jun 2025
+96W6trOPlUfcp3S5awKn|Zheng VS Kessler|Zheng Game Handicap (-3.5) -|12 Jun 2025
+9uBZfM935GnwPwCcm96M|Hungary VS Denmark|Total Over 5 Goals  -|16 May 2025
+AHrrUbnw4i79PaWS9eaJ|Portugal VS Denmark|Portugal Win -|23 Mar 2025
+ALH4pcxWCE59YiAbawWa|Bournemouth VS Fulham|BTTS, YES -|14 Apr 2025
+ANsJR8ZcUcmQHAOSyBwy|Swiatek VS Collins|Swiatek Game Handicap (-3.5) -|05 Jul 2025
+AfLj0JbUKfScPi45glmQ|Leipzig VS Bayern|Total Over 3.5 Goals -|03 May 2025
+B9BNxY7yIA88oE7qocWe|Medvedev VS Nakashima|Medvedev Handicap (-2.5) -|29 Apr 2025
+Bk6LlA2fGVWZ32rMtN9l|Real Betis VS Real Madrid|Real Madrid Win -|01 Mar 2025
+C0SBHsGGAoN1Xbcpq8ze|Finland VS Poland|BTTS, YES -|10 Jun 2025
+C8r7wn84JjOOMeFzjAnT|Crvena Zvezda VS Real Madrid|Real Madrid Win -|28 Mar 2025
+CQtKniYsBWo9PNgfejks|Tiafoe VS Korda|Korda Win -|30 May 2025
+DiR32047O1Mwfcu4U7hj|Aston Villa VS Nottingham|Total Over 2.5 Goals -|05 Apr 2025
+DstML8PTsnmRB8Bpepz5|Czech Republic VS Hungary|Total Under 6.5 Goals  -|15 May 2025
+EGywWZHCjllBz3jrZHuP|Zverev VS Fils|Fils Set Handicap (+1.5) -|26 Mar 2025
+Ea3afxMfaUFFF6eEtaEA|Medvedev VS Struff|Struff Handicap (+4.5) -|14 Feb 2025
+F1acZbqgTvqwQgPZMTUg|Fluminense VS Chelsea|BTTS, YES -|08 Jul 2025
+F1tqiNs13upgWZkru9Lk|Fokina VS Monfils|Total Over 21.5 Games -|20 May 2025
+F6zKFSh5PUV0Y5Do01RA|Osasuna VS Valencia|BTTS, YES -|02 Mar 2025
+FGGntgKf6PRSR4v156Ci|PSG VS Liverpool|Total Over 2.5 Goals -|05 Mar 2025
+FI06qaSLFRV7RQZqC5pY|Dortmund VS Sporting|Total Under 2.5 Goals -|19 Feb 2025
+FJwfuJwhbi7U7sDG848C|Medvedev VS Muller|Medvedev Handicap (-2.5) -|09 Apr 2025
+FadamNVCXf8rxhhx5f9r|Empoli VS Milan|Milan Win -|08 Feb 2025
+GHTx8TucDXKvsvI0H2CY|Flamengo VS Chelsea|Chelsea Win -|20 Jun 2025
+GfyXgShhRimKsrsD1gV8|Brentford VS Aston Villa|Total Over 3.5 Goals -|08 Mar 2025
+HrBwpNmGRAhUpPPm0dCK|Fils VS Medvedev|Total Over 20.5 Points -|13 Mar 2025
+I8hCMkiPCfzOb2bmFU3S|Man United VS Man City|Total Over 2.5 Goals -|06 Apr 2025
+IzZIYj8ve2kcVTyXBYld|Brighton VS Leicester|Total Over 2.5 Goals -|12 Apr 2025
+JGsCh4y8IVKKmUytbnEE|Southampton VS Brighton|BTTS, YES -|22 Feb 2025
+JikEHHsrpbOQHpgYwtZK|Leicester City VS Brentford|Total Over 3 Goals -|21 Feb 2025
+JtTU1w6HTb7WYRBJvTIZ|Moutet VS Griekspoor|Griekspoor Handicap (-2.5) -|28 Jun 2025
+Kl6r56ccnEzvruYMlAjg|Inter Milan VS Fluminense|Inter Milan Win -|30 Jun 2025
+KuhQ3pMPEWhnyUXKh8HD|Tauson VS Kalinskaya|Tauson Win -|03 Jul 2025
+Kw7dxBk2BwDVZOrsNcYP|Misolic VS Djokovic|Total Under 30.5 Games -|31 May 2025
+KwYN9xAqTKtezGBmySc8|Brighton VS Bournemouth|Total Over 2.5 Goals -|25 Feb 2025
+LS6vEl9X11M77myqhAId|Juventus VS PSV|BTTS, YES -|11 Feb 2025
+LTwOxSSOPa2RQZ6d3NBy|Everton VS Man City|Man City Win -|19 Apr 2025
+LujTnri0SlEO1gfIjebr|Man City VS Wolves|BTTS, YES -|02 May 2025
+N8h1nIjxFxTE555eyHd8|Barcelona VS Benfica|Total Over 3.5 Goals -|11 Mar 2025
+NQhEjwo4lfem5u7LMMIX|Tottenham VS Man United|Total Under 3.5 Goals -|16 Feb 2025
+NtmJxfwICUwSoTAYxnme|Alexandrova VS Kudermetova|Alexandrova Win -|17 Feb 2025
+O1c3cISgHURq52bPPc2l|R.Union VS Ajax|BTTS, YES -|13 Feb 2025
+OTtOpJjySyABWkJv59OY|Espanyol VS Atletico Madrid|Atletico Madrid Win -|29 Mar 2025
+P2zCMDLkilmAitGovcS9|De Jong VS Eubanks|Eubanks Win -|01 Jul 2025
+PKNzhpP1tzdWr32mKdmm|Leicester VS Ipswich|Total Over 2.5 Goals  -|18 May 2025
+PLc7lrDwVTur31BUgEg4|Sabalenka VS Anisimova|Sabalenka Game Handicap (-3.5) -|10 Jul 2025
+PbRjIpjDONaeuX16FfKO|Finland VS Netherlands|Total Over 2.5 Goals -|07 Jun 2025
+QaPuOnVFGNyZdNEUfiVs|Croatia VS France|Total Under 2.5 Goals -|20 Mar 2025
+SY4dxlrIjKiZK0ADeawJ|Norway VS Germany|Total Under 5.5 Goals -|13 May 2025
+SdZXQQm9O0HH1jtqMl2u|Valencia VS Sevilla|BTTS, YES -|11 Apr 2025
+Selt4wAiNACQfG41YKHH|Sweden VS Slovakia|Slovakia Total Over 1.5 Goals -|09 May 2025
+Su5806TbWBnVbO3ENEJC|Celtic VS Bayern|BTTS, YES -|12 Feb 2025
+SuNIukBxYKcRs3zdpsMx|AC Milan VS Feyenoord|Total Under 3.5 Goals -|18 Feb 2025
+TfebXAiqKZ65XdrZskzc|Iraq VS South Korea|Total Under 2.5 Goals -|05 Jun 2025
+TrIe2IMjuWpqvIW4gWaA|Southampton VS Fulham|Total Over 2.5 Goals -|26 Apr 2025
+TvrPFycDSBwguJL8xLNh|Griekspoor VS Auger|Auger Win -|27 Jun 2025
+UIew5ZH1srwIk2B4Aa7t|Bublik VS Khachanov|Khachanov Win -|21 Jun 2025
+VXMZR5AaRf0trlFZkn9k|Bu VS Darderi|Darderi Handicap (-2.5) -|07 May 2025
+VYsxr5EV8lwBVtWP1NDk|France VS Latvia|Latvia Win -|10 May 2025
+Vv2gptS0fFB1og8ZmIOJ|Comesana VS Baez|Comesana Handicap (+4.5) -|27 Feb 2025
+WH6tTeC7BDwEEyZWWiB2|Bublik VS Draper|Total Over 32.5 Games -|02 Jun 2025
+XWu3WhJssunwMEgKjQDE|Benfica VS Bayern|Bayern Win -|24 Jun 2025
+Xa1XrSNMTTAjQagx8Y0N|Cerundolo VS Diallo|Total Over 33.5 Games -|26 May 2025
+YHwICIOHcMbeQJmo46Ir|Cerundolo VS Gaston|Gaston Win -|01 Apr 2025
+YXRtByrXj904gHBon9VU|Hurkacz VS Djokovic|Djokovic Set Handicap (-1.5) -|24 May 2025
+Z0BE67zfxuMX1Pe3Zbfe|Hijikata VS Medjedovic|Medjedovic Handicap (-2.5) -|19 Mar 2025
+ZPFx0zs58kvDOWywxkwF|Real Sociedad VS Man United|BTTS, YES -|06 Mar 2025
+Zi7DsN5sr9dOXMZenOgv|Lithuania VS Finland|Finland Win -|24 Mar 2025
+Zty42bHKvsc2dZ5cZAma|Cerundolo VS Etcheverry|Etcheverry Win -|28 Feb 2025
+aCfEYxZTiVXDv4AEdTHj|Lys VS Paolini|Paolini Handicap (-3.5) -|15 Apr 2025
+ac8isk71iwNf9kJ5PCti|Musetti VS Tiafoe|Total Over 36.5 Games -|03 Jun 2025
+bA2OYi0mqItXXkH6pn7D|France VS Slovenia|France Win  -|19 May 2025
+bqmz2U2knj7rOaj6NVL0|Sweden VS Denmark|Total Over 6 Goals -|25 May 2025
+dASPL8v2Qx9yQlaGASVL|Toulouse VS Monaco|Total Over 2.5 Goals -|07 Mar 2025
+dNOBekE5I5Fb0WGSlJle|Leicester VS Liverpool|Total Over 3.5 Goals -|20 Apr 2025
+eGi5lwsKYEfbuqYYNNTJ|Lecce VS Bologna|Bologna Win -|09 Feb 2025
+f6Nx6WCBnExu3v6HsI8d|Man City VS Wydad|Total Over 9.5 Corners -|18 Jun 2025
+fb0Z4ZTFRAqRq2W7Udkr|Real Betis VS Las Palmas|Total Over 2.5 Goals -|09 Mar 2025
+fccs1qjmZDCuQiubXFyy|Fernandez VS Li|Fernandez Win -|24 Apr 2025
+fnOp9PDcwES0H5uXoKo4|Tottenham VS Nottingham|Total Over 2.5 Goals -|21 Apr 2025
+gZLWCMOlDdsDtt9PDBbu|Bublik VS Medvedev|Medvedev Win -|22 Jun 2025
+ggWOp2djqwCYgVeeEIYi|Chelsea VS Hotspur|Total Over 10.5 Corners -|03 Apr 2025
+gnToiDGx2ezet6CluAFL|Parry VS Kartal|Kartal Win -|04 Jul 2025
+gpZLfAKhBRdL5rF99jlU|Mainz VS Bayer|Total Over 3 Goals  -|17 May 2025
+hEvk8JAzm6cpzk2F9pPA|Wolves VS Tottenham|BTTS,  YES -|13 Apr 2025
+hLqAxa9on285e5wreufL|Sinner VS Bublik|Total Over 28.5 Games -|04 Jun 2025
+i0Zyftl2gG5URBvsUSIF|PSG VS Nice|Total Under 3.5 Goals -|25 Apr 2025
+iLDy5v9OZbPW7pCt26pI|ASVEL VS Zalgiris|Zalgiris Win -|27 Mar 2025
+idbw7lzYZsUWxaHy4wOf|Zurich VS EHC Kloten|Zurich Handicap (-1.5) -|17 Mar 2025
+ixMSrudhyRiRdhMZT3Gh|Crystal Palace VS Everton|BTTS, NO -|15 Feb 2025
+jez1AkWpOzGXIfJR8SXw|West Ham VS Newcastle|Total Over 2.5 Goals -|10 Mar 2025
+jrnKsk4uHKG3u4w5YzGU|Sinner 🇮🇹 VS Alcaraz 🇪🇸|Sinner Win -|08 Jun 2025
+k0Ow9CIfk0aG60NTPtjR|Brondby VS Silkeborg|BTTS, YES -|30 Apr 2025
+kbeLqMXWhv9hzNb2WLma|Man United VS Lyon|BTTS, YES -|17 Apr 2025
+kfXFQlbyeKc8CxlTnw5z|Liverpool VS Everton|Liverpool Total Over 1.5 Goals -|02 Apr 2025
+kqlJ9j5W5V2K0geaktf7|Liu VS Fruhvirtova|Liu Win -|18 Mar 2025
+l9QTMKuslb0PbfizSavb|Maroszan VS Alcaraz|Total Over 29.5 Games -|28 May 2025
+lNAecpU4728NifMo2RTT|Atletico Madrid VS Barcelona|Total Over 2.5 Goals -|16 Mar 2025
+lZra2G7LHmlktOadxm4L|Anisimova VS Maria|Anisimova Handicap (-3.5) -|15 Jun 2025
+lhv7ONOGzOmAeTCfgRK1|Norrie VS Djokovic|Djokovic Handicap (-4.5) -|23 May 2025
+m2OXLwmt2xfKZpSgVYsl|Arnaldi VS Struff|Struff Win -|09 Jun 2025
+mhqYTkuJynz33sjORkN3|Olympiacos VS Panathinaikos|Panathinaikos Handicap (+7.5) -|14 Mar 2025
+oO273AkqerEE26glkdb6|Ilves VS Tappara|Ilves Win -|31 Mar 2025
+oUSNGW8vYzdawNNs3VnU|Getafe VS Real Madrid|Real Madrid Win -|23 Apr 2025
+ouMwHQzHZwDF5pXy9iKB|Paris VS Fenerbahce|Paris Win -|03 Mar 2025
+ovHNcVUCWpegNJTexx3I|Legia Warsaw VS Chelsea|Total Over 2.5 Goals -|10 Apr 2025
+oy3NBdW140LRrQiJhtvg|Italy 🇮🇹 VS Spain 🇪🇸|BTTS, YES -|11 Jul 2025
+qG2EGtD3vhUN6TkNBWR9|Mpetshi VS Zhang|Mpetshi Win -|24 Feb 2025
+qWsKtHnthjT8d5IMGdln|Arsenal VS PSV|PSV Total Over 0.5 Goals -|12 Mar 2025
+qYu5v6RGswROiIYMg9C7|Tien VS Moutet|Tien Win -|26 Jun 2025
+rmpaifqgeT1W9uYl9L5z|Tiafoe VS Kecmanovic|Kecmanovic Handicap (-2.5) -|08 Apr 2025
+s1OytRon74b3OchQVZJP|Sweden VS Czech Republic|Sweden Win -|22 May 2025
+sFu1dxrD9t4eIMokpvtw|Shevchenko VS Quinn|Shevchenko Win -|29 May 2025
+twp9db849L3YfOqLMVGS|Newcastle VS Nottingham|Newcastle Win -|23 Feb 2025
+uFARdbWPhWc9oFoZF69I|Montenegro VS Faroe Islands|Total Under 2.5 Goals -|25 Mar 2025
+uKZdcWWiU633Dd3Uf1Cu|Zheng VS Raducanu|Raducanu Win -|13 Jun 2025
+uzRwbnMErndkA80HSuPd|PSG VS Real Madrid|Total Over 2.5 Goals -|09 Jul 2025
+v3rFP4mqHY2TX86BmguC|Khachanov VS Paul|Paul Win -|28 Apr 2025
+v4jjjZAjlsiO5fEu6d6o|Altmaier VS Medvedev|Total Over 21.5 Games -|16 Jun 2025
+vqR0K3FtS4qvVOqkCyZI|Leicester VS Newcastle United|Total Over 2.5 Goals -|07 Apr 2025
+w9GCEnFEb3Icbetrj5ih|Baena VS Lajovic|Baena Handicap (-2.5) -|10 Feb 2025
+x9rih48YrBEDRRddWPsM|Tottenham VS Bodo/Glimt|Total Over 3 Goals -|01 May 2025
+xZXoUnV2830JfAUiNjRr|Estonia VS Israel|BTTS, YES -|06 Jun 2025
+xaxX00PBNaqmaPUtdxLY|Mpetshi VS Auger|Mpetshi Handicap (+3.5) -|21 May 2025
+yIJRP1WRpws9lPmazT8t|River Plate VS Urawa|River Plate Total Over 1.5 Goals -|17 Jun 2025
+yhCWJwzKyPlESXjDFLVm|Alexandrova VS Bencic|Alexandrova Game Handicap (-3.5) -|07 Jul 2025
+yt4zeYsibjM1e03TVA7W|Monaco VS Barcelona|Monaco Handicap (-3.5) -|06 May 2025
+yuCgQmDqph77YV4qzDxp|Tsitsipas VS Fils|Fils Win -|18 Apr 2025
+zKOkTZ37GTI2rjauFBhw|Palmeiras VS Al Ahly|BTTS, NO -|19 Jun 2025
+zv5qd2mPEIJLE34DmN0K|Sundowns VS Fluminese|BTTS, YES -|25 Jun 2025

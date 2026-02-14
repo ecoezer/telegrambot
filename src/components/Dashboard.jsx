@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useBets } from '../hooks/useBets';
 import { useAuth } from '../contexts/AuthContext';
 import BetCard from './BetCard';
+import Chat from './Chat';
 
 export default function Dashboard() {
     const { bets, loading } = useBets();
@@ -30,15 +32,15 @@ export default function Dashboard() {
         [filteredBets]
     );
 
-    const totalBets = sortedBets.length;
-    const wonBets = sortedBets.filter(b => b.status?.toLowerCase() === 'win' || b.status?.toLowerCase() === 'won').length;
-    const lostBets = sortedBets.filter(b => b.status?.toLowerCase() === 'loss' || b.status?.toLowerCase() === 'lost').length;
+    const totalBets = sortedBets.filter(b => !['push', 'refund', 'void'].includes((b.status || '').toLowerCase())).length;
+    const wonBets = sortedBets.filter(b => ['win', 'won'].includes((b.status || '').toLowerCase())).length;
+    // const lostBets = sortedBets.filter(b => ['loss', 'lost'].includes((b.status || '').toLowerCase())).length;
     const winRate = totalBets > 0 ? ((wonBets / totalBets) * 100).toFixed(1) : 0;
 
     const unitProfit = sortedBets.reduce((acc, bet) => {
-        const status = bet.status?.toLowerCase();
-        if (status === 'win' || status === 'won') return acc + ((bet.odds || 1) - 1);
-        if (status === 'loss' || status === 'lost') return acc - 1;
+        const status = (bet.status || '').toLowerCase();
+        if (['win', 'won'].includes(status)) return acc + ((bet.odds || 1) - 1);
+        if (['loss', 'lost'].includes(status)) return acc - 1;
         return acc;
     }, 0);
 
@@ -79,17 +81,23 @@ export default function Dashboard() {
                         Stats & Sim
                     </a>
 
-                    <button
-                        onClick={logout}
-                        className="group flex items-center gap-2 hover:text-red-400 transition-all font-semibold text-sm"
-                    >
-                        <span className="text-gray-400 group-hover:text-red-400">{currentUser?.email}</span>
-                        <div className="p-2 rounded-lg bg-white/5 group-hover:bg-red-500/10 border border-white/10 group-hover:border-red-500/30 transition-all">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
-                        </div>
-                    </button>
+                    {currentUser ? (
+                        <button
+                            onClick={logout}
+                            className="group flex items-center gap-2 hover:text-red-400 transition-all font-semibold text-sm"
+                        >
+                            <span className="text-gray-400 group-hover:text-red-400">{currentUser.email}</span>
+                            <div className="p-2 rounded-lg bg-white/5 group-hover:bg-red-500/10 border border-white/10 group-hover:border-red-500/30 transition-all">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                            </div>
+                        </button>
+                    ) : (
+                        <Link to="/login" className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/10 transition-all">
+                            Admin Login
+                        </Link>
+                    )}
                 </div>
             </nav>
 
@@ -190,7 +198,7 @@ export default function Dashboard() {
                     />
                     <StatCard
                         title="Active Signal"
-                        value={bets.filter(b => b.status === 'pending').length}
+                        value={bets.filter(b => (b.status || 'pending').toLowerCase() === 'pending').length}
                         icon="🔥"
                         color="text-yellow-400"
                         chart={<Sparkline color="#FBBF24" data={[50, 40, 30, 45, 50, 40, 50]} />}
@@ -204,31 +212,39 @@ export default function Dashboard() {
                     />
                 </div>
 
-                {/* Main Content */}
-                <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-bold font-outfit flex items-center gap-2">
-                            Recent Signals
-                            <span className="bg-blue-500/10 text-blue-400 text-[10px] px-2 py-0.5 rounded-full border border-blue-500/20">{totalBets} TOTAL</span>
-                        </h3>
+                {/* Main Content Grid (Signals + Chat) */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Bets List */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-bold font-outfit flex items-center gap-2">
+                                Recent Signals
+                                <span className="bg-blue-500/10 text-blue-400 text-[10px] px-2 py-0.5 rounded-full border border-blue-500/20">{totalBets} TOTAL</span>
+                            </h3>
+                        </div>
+
+                        <div className="flex flex-col space-y-3">
+                            {sortedBets.map((bet) => (
+                                <BetCard key={bet.id} bet={bet} />
+                            ))}
+
+                            {sortedBets.length === 0 && (
+                                <div className="py-20 bg-white/5 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-gray-500">
+                                    <div className="p-4 bg-white/5 rounded-full mb-4">
+                                        <svg className="w-12 h-12 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0l-8 8-8-8" />
+                                        </svg>
+                                    </div>
+                                    <p className="font-semibold uppercase tracking-widest text-sm">Quiet Market...</p>
+                                    <p className="text-xs mt-1">Waiting for the next signal from Telegram.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="flex flex-col space-y-3">
-                        {sortedBets.map((bet) => (
-                            <BetCard key={bet.id} bet={bet} />
-                        ))}
-
-                        {sortedBets.length === 0 && (
-                            <div className="py-20 bg-white/5 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-gray-500">
-                                <div className="p-4 bg-white/5 rounded-full mb-4">
-                                    <svg className="w-12 h-12 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0l-8 8-8-8" />
-                                    </svg>
-                                </div>
-                                <p className="font-semibold uppercase tracking-widest text-sm">Quiet Market...</p>
-                                <p className="text-xs mt-1">Waiting for the next signal from Telegram.</p>
-                            </div>
-                        )}
+                    {/* Chat Column */}
+                    <div className="lg:col-span-1">
+                        <Chat />
                     </div>
                 </div>
             </div>

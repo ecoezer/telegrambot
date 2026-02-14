@@ -12,9 +12,7 @@ let worker = null;
 export const initOCR = async () => {
     if (!worker) {
         console.log("⚙️  Initializing generic Tesseract worker...");
-        // In v5, createWorker is async and returns a worker ready to use
         worker = await Tesseract.createWorker("eng");
-        // Use PSM 6 (Assume a single uniform block of text) to help with tabular data
         await worker.setParameters({
             tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK,
         });
@@ -35,10 +33,29 @@ export const terminateOCR = async () => {
 const processImageForHeader = async (inputPath, outputPath) => {
     try {
         const image = await Jimp.read(inputPath);
-        // properly await the write operation
-        await image.greyscale().invert().write(outputPath);
+        // Increase contrast to max (1) to make text pop against background, then invert
+        await image.greyscale().contrast(1).invert().write(outputPath);
     } catch (e) {
         console.error("❌ Image Processing Failed:", e);
+    }
+};
+
+// New Helper: Crop Header Strip (Top 25%) for "Single - Odds"
+const processImageForHeaderCrop = async (inputPath, outputPath) => {
+    try {
+        const image = await Jimp.read(inputPath);
+        const w = image.bitmap.width;
+        const h = image.bitmap.height;
+
+        // Target Full Width Header (Top 25% - increased from 20%)
+        // FIXED: Using object syntax for crop (Jimp v1.0+)
+        await image.crop({ x: 0, y: 0, w: w, h: Math.floor(h * 0.25) })
+            .scale(2) // Scale up 2x
+            .invert() // White text on blue -> Black on White
+            .contrast(1) // High contrast
+            .write(outputPath);
+    } catch (e) {
+        console.error("❌ Header Crop Processing Failed:", e);
     }
 };
 
@@ -66,7 +83,7 @@ export const performOCR = async (client, message) => {
         const { data: { text: textPass1 } } = await worker.recognize(tempPath);
         // console.log(`📝 Text Pass 1:`, textPass1);
 
-        const betData = parseOCRText(textPass1, message.date);
+        let betData = parseOCRText(textPass1, message.date);
 
         // If we found everything (Odds + Stake), we are good.
         if (betData && betData.odds > 0 && betData.stake > 1) {
@@ -76,30 +93,50 @@ export const performOCR = async (client, message) => {
         }
 
         // --- PASS 2: Inverted OCR (Targeting Header: Odds) ---
-        // Only run if Odds are missing
-        if (!betData.odds || betData.odds === 0) {
+        // Only run if Odds are missing or betData is null
+        if (!betData || !betData.odds || betData.odds === 0) {
             console.log("⚠️ Odds missing in Pass 1. Attempting Image Inversion for Header...");
 
             // Generate Inverted Image
             await processImageForHeader(tempPath, tempInvertedPath);
 
-            // Wait for file write (Jimp write is async but we awaited promise? Jimp docs say write is async but returns promise in some versions, callback in others. 
-            // Better to use writeAsync if available or await the write. 
-            // In v0.16+ it returns a promise.
-            // Let's assume standard behavior or add a small delay if needed or use buffer directly.
-            // Actually, newer Jimp versions: await image.writeAsync(path)
-
             // Re-run OCR on inverted image
-            console.log("🔍 Running OCR Pass 2 (Inverted)...");
+            console.log("🔍 Running OCR Pass 2 (Inverted + High Contrast)...");
             const { data: { text: textPass2 } } = await worker.recognize(tempInvertedPath);
-            // console.log(`📝 Text Pass 2:`, textPass2);
+            console.log(`📝 Text Pass 2:`, textPass2.substring(0, 100).replace(/\n/g, ' '));
 
             const betDataPass2 = parseOCRText(textPass2, message.date);
 
             if (betDataPass2 && betDataPass2.odds > 0) {
                 console.log(`💡 Found Odds in Pass 2: ${betDataPass2.odds}`);
+                if (!betData) betData = {}; // Init if null
                 betData.odds = betDataPass2.odds; // Merge Odds into main result
+                // If Pass 1 was null, we might need other fields from Pass 2
+                if (!betData.match) Object.assign(betData, betDataPass2);
             }
+        }
+
+        // --- PASS 3: Header Crop (Top 25%) ---
+        // Only run if Odds are STILL missing
+        if (!betData || !betData.odds || betData.odds === 0) {
+            console.log("⚠️ Odds still missing. Attempting Header Crop (Top 25%)...");
+            const tempHeaderCropPath = path.join(__dirname, `../../temp_bet_headercrop_${message.id}.jpg`);
+
+            await processImageForHeaderCrop(tempPath, tempHeaderCropPath);
+
+            console.log("🔍 Running OCR Pass 3 (Header Crop)...");
+            const { data: { text: textPass3 } } = await worker.recognize(tempHeaderCropPath);
+            console.log(`📝 Text Pass 3:`, textPass3.substring(0, 100).replace(/\n/g, ' '));
+
+            const betDataPass3 = parseOCRText(textPass3, message.date);
+
+            if (betDataPass3 && betDataPass3.odds > 0) {
+                console.log(`💡 Found Odds in Pass 3: ${betDataPass3.odds}`);
+                if (!betData) betData = {};
+                betData.odds = betDataPass3.odds;
+                if (!betData.match) Object.assign(betData, betDataPass3);
+            }
+            if (fs.existsSync(tempHeaderCropPath)) fs.unlinkSync(tempHeaderCropPath);
         }
 
         // Cleanup
@@ -107,7 +144,7 @@ export const performOCR = async (client, message) => {
         if (fs.existsSync(tempInvertedPath)) fs.unlinkSync(tempInvertedPath);
 
         // Return combined result
-        if (betData.odds > 0 || betData.stake > 1) {
+        if (betData && (betData.odds > 0 || betData.stake > 1)) {
             console.log(`✅ Final OCR Result: Odds ${betData.odds}, Stake ${betData.stake}`);
             return betData;
         }
@@ -151,15 +188,23 @@ const parseOCRText = (text, messageDate) => {
     for (const line of lines) {
         if (/Cash out|Possible win|Return|Total/i.test(line)) continue;
 
-        const explicitMatch = line.match(/(?:@|Odds|Cot|Quota|Single):?\s*(\d+\.\d{2})/i); // Added "Single" for the blue bubble
+        const explicitMatch = line.match(/(?:@|Odds|Cot|Quota|Single)[\s—:-]*(\d+[\.,]?\d*)/i);
         if (explicitMatch) {
-            odds = parseFloat(explicitMatch[1]);
-            break;
+            let val = parseFloat(explicitMatch[1].replace(',', '.'));
+            // Heuristic: If missing decimal point, e.g. 188 -> 1.88
+            if (val > 100 && val < 5000) {
+                val = val / 100;
+            }
+            // Heuristic: If single decimal place e.g. 1.6
+            if (val > 1.0 && val < 50.0) {
+                odds = val;
+                break;
+            }
         }
 
-        const standaloneMatch = line.match(/\b(\d+\.\d{2})\b/);
+        const standaloneMatch = line.match(/\b(\d+[\.,]\d{1,2})\b/); // Allow 1 or 2 decimals
         if (standaloneMatch) {
-            const val = parseFloat(standaloneMatch[1]);
+            const val = parseFloat(standaloneMatch[1].replace(',', '.'));
             if (val > 1.0 && val < 50.0) {
                 odds = val;
             }
@@ -167,11 +212,32 @@ const parseOCRText = (text, messageDate) => {
     }
 
     if (odds === 0) {
-        const globalMatch = cleanText.match(/(?:Single|@)?\s*(\d+\.\d{2})/); // Relaxed regex
+        const globalMatch = cleanText.match(/(?:@|Single)[\s—:-]*(\d+\.\d{2})/);
         if (globalMatch) {
             const val = parseFloat(globalMatch[1]);
             if (val < 50.0 && !cleanText.includes(`€ ${val}`) && !cleanText.includes(`$ ${val}`)) {
                 odds = val;
+            }
+        }
+    }
+
+    // Heuristic: Calculate Odds from Possible Win / Stake
+    if (odds === 0) {
+        const winRegex = /(?:Possible win|Return|To Win)[\s:€$£]*([\d,]+\.?\d*)/i;
+        const winMatch = cleanText.match(winRegex);
+
+        if (winMatch) {
+            const possibleWin = parseFloat(winMatch[1].replace(/,/g, ""));
+            let calcStake = stake;
+
+            if (calcStake > 1 && possibleWin > calcStake) {
+                const calculatedOdds = possibleWin / calcStake;
+                // Round to 2 decimal places
+                const roundedOdds = Math.round(calculatedOdds * 100) / 100;
+                if (roundedOdds > 1.01 && roundedOdds < 50.0) {
+                    console.log(`💡 Calculated Odds from Win/Stake: ${possibleWin} / ${calcStake} = ${roundedOdds}`);
+                    odds = roundedOdds;
+                }
             }
         }
     }

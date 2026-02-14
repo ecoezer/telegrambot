@@ -1,51 +1,46 @@
+
 import admin from 'firebase-admin';
 import dotenv from 'dotenv';
+import path from "path";
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT))
-    });
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+        admin.initializeApp({
+            credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT))
+        });
+    }
 }
 
 const db = admin.firestore();
 
-const resolutions = [
-    { id: 'm2EYYW5VPKG9994Gk5bG', match: 'Wolves VS Chelsea', status: 'win' },
-    { id: 'n3b3aPYkIi3jgCMzUHRs', match: 'Nice VS Montpellier', status: 'win' },
-    { id: 'jR6AYAxV4b2BnL3CDjB4', match: 'Arsenal VS Man United', status: 'loss' },
-    { id: 'dx3ewLsCQ53UfUFayEM5', match: 'Girona VS Getafe', status: 'win' },
-    { id: 'mCKH7KLkih0trAjihDfN', match: 'Celta De Vigo VS Rayo', status: 'loss' },
-    { id: 'g9Z1sOHYF31FMV2xpWyY', match: 'Como VS Milan', status: 'win' },
-    { id: 'ZxGQjzmLwq7P3jpAAqs5', match: 'Juventus VS Cremonese', status: 'win' },
-    { id: 'z64q9Df9LZsYfEqYZHIA', match: 'Arsenal VS Liverpool', status: 'loss' },
-    { id: 'q1giZDub0qF2KJjUvIC7', match: 'ASVEL VS Real Madrid', status: 'win' },
-    { id: 'z7rtxfHHLHYqKnud1rZN', match: 'Efes VS Zvezda', status: 'loss' }
+const updates = [
+    { id: '0M6XYBaEcles40rml6UI', score: '0-0', status: 'loss' }, // Nottingham vs Arsenal (Over 2.5) => 0-0 => Loss
+    { id: '0rbAMA9NQAL4nUj24I9l', score: '5-1', status: 'win' },  // Liverpool vs Tottenham (Over 3.5) => 6 => Win
+    { id: '18EUlhXE4s6DM60vVkkO', score: '1-0', status: 'win' },  // Atleti vs Botafogo (Atleti Win) => 1-0 => Win
+    { id: '1Hvwv7UunAXa6deXDZtP', score: '0-0', status: 'loss' }, // Bilbao vs Osasuna (Bilbao -1) => 0-0 => Loss
+    { id: '1Rw6yCrpQ4FnDC0iloxN', score: '2-2', status: 'win' }   // Austria vs Slovakia (Over 2) => 2-2 (4 goals) => Win
 ];
 
-async function resolveBets() {
-    for (const res of resolutions) {
-        const docRef = db.collection('bets').doc(res.id);
-        const doc = await docRef.get();
+async function updateBatch() {
+    const batch = db.batch();
 
-        if (!doc.exists) {
-            console.log(`❌ Bet ${res.id} not found.`);
-            continue;
-        }
-
-        const data = doc.data();
-        const odds = data.odds || 0;
-        const stake = data.stake || 1;
-        const resultAmount = res.status === 'win' ? (stake * odds) : 0;
-
-        await docRef.update({
-            status: res.status,
-            resultAmount: resultAmount
+    updates.forEach(u => {
+        const ref = db.collection('bets').doc(u.id);
+        batch.update(ref, {
+            score: u.score,
+            status: u.status
         });
+    });
 
-        console.log(`✅ Result: ${res.match} -> ${res.status.toUpperCase()} (Payout: ${resultAmount})`);
-    }
+    await batch.commit();
+    console.log(`Updated ${updates.length} bets.`);
+    process.exit(0);
 }
 
-resolveBets().catch(console.error);
+updateBatch();

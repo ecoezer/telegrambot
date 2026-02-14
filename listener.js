@@ -84,16 +84,21 @@ const scanHistory = async () => {
 
     console.log(`🔎 Found channel: ${target.title} (${target.id}). Scanning...`);
 
-    const sevenDaysAgo = Math.floor(Date.now() / 1000) - (210 * 24 * 60 * 60);
+    // Standard scan window: 30 days
+    const sevenDaysAgo = Math.floor(Date.now() / 1000) - (30 * 24 * 60 * 60);
     const newBets = [];
     const updatedBets = []; // For stake updates
     const MAX_BATCH_SIZE = 500; // Firestore limit per batch
 
     // Iterate messages
     let processedCount = 0;
-    for (const message of await client.getMessages(target.inputEntity, { limit: 5000 })) {
+    // Optimized limit for daily operation
+    const FETCH_LIMIT = 1000;
+    console.log(`📥 Fetching last ${FETCH_LIMIT} messages...`);
+
+    for (const message of await client.getMessages(target.inputEntity, { limit: FETCH_LIMIT })) {
         if (message.date < sevenDaysAgo) {
-            console.log("⏹️  Reached 210-day limit. Stopping scan.");
+            console.log("⏹️  Reached 14-day limit. Stopping scan.");
             break;
         }
 
