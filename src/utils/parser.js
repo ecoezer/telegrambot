@@ -1,5 +1,8 @@
 
 export const parseBetMessage = (text, messageDate) => {
+    // Defensive: limit processing to reasonable length to prevent ReDoS on massive inputs
+    if (text.length > 10000) return null;
+
     // Strictly match the header from the user's image
     if (!text.includes("Daily BET from YRL BETS")) return null;
 

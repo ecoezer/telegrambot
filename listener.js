@@ -255,13 +255,27 @@ const updateExistingBets = async (updates) => {
             const message = event.message;
             const text = message.text || message.message || "";
 
-            // Log incoming messages for debugging
+            // OPTIMIZATION: Check text content FIRST to avoid expensive getChat() calls
+            // This prevents API rate limits if the bot is in busy groups
+            const isRelevantText = text.includes("YRL BETS");
+            const isSavedMessages = !message.chatId; // Rough heuristic, or we can just skip title check if text matches
+
+            if (!isRelevantText && !message.message?.peerId?.channelId) {
+                // If text doesn't match and it's not a channel we might be interested in...
+                // But we need to know the channel title to be sure. 
+                // Let's settle for: Only call getChat if text looks promising OR if we are debugging.
+                return;
+            }
+
+            // Log incoming messages for debugging (only relevant ones)
             const chat = await message.getChat();
             const title = chat.title || chat.username || chat.id || "Unknown";
 
-            // Only log if it comes from YRL BETS or contains the user's explicit testing signature
+            // Double check title just in case the text check missed something but the *channel* is right
             if (title.includes("YRL BETS") || text.includes("YRL BETS") || title === "Saved Messages") {
                 console.log(`📩 New Message from ${title}: ${text.substring(0, 50)}...`);
+            } else {
+                return; // Skip processing
             }
 
             let betData = parseBetMessage(text);

@@ -6,7 +6,8 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [isSignUp, setIsSignUp] = useState(false);
+    // const [isSignUp, setIsSignUp] = useState(false); // Disabled for security
+    const isSignUp = false;
     const { login, signup } = useAuth();
     const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ export default function Login() {
                         </svg>
                     </div>
                     <h2 className="text-4xl font-bold font-outfit tracking-tight neon-text-blue">
-                        {isSignUp ? "Join YRL" : "YRL BETS"}
+                        {isSignUp ? "Join YRL (Closed)" : "YRL BETS"}
                     </h2>
                     <p className="text-gray-400 mt-2 text-sm">Elevate your game with real-time insights</p>
                 </div>
@@ -87,14 +88,8 @@ export default function Login() {
 
                     <div className="text-center mt-8 pt-6 border-t border-white/5">
                         <p className="text-gray-400 text-sm">
-                            {isSignUp ? "Already a member? " : "New to the platform? "}
-                            <button
-                                type="button"
-                                onClick={() => setIsSignUp(!isSignUp)}
-                                className="text-[#00D1FF] hover:text-white transition-colors font-semibold"
-                            >
-                                {isSignUp ? "Log In" : "Get Started"}
-                            </button>
+                            {/* Registration Closed */}
+                            <span className="text-gray-600 italic">Registration is currently invite-only.</span>
                         </p>
                     </div>
                 </form>
