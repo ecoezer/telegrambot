@@ -24,7 +24,7 @@ if (!admin.apps.length) {
         process.exit(1);
     }
     // Tek tırnak veya çift tırnak ile sarılmış olabilir (.env kopyalamasından)
-    const rawSA = process.env.FIREBASE_SERVICE_ACCOUNT.trim().replace(/^['"]|['"]$/g, '');
+    const rawSA = process.env.FIREBASE_SERVICE_ACCOUNT.trim().replace(/^[\u2018\u2019'""]|[\u2018\u2019'""]$/g, '');
     let serviceAccount;
     try {
         serviceAccount = JSON.parse(rawSA);
