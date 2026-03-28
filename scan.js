@@ -23,14 +23,16 @@ if (!admin.apps.length) {
         console.error("❌ FIREBASE_SERVICE_ACCOUNT eksik!");
         process.exit(1);
     }
-    // Tek tırnak veya çift tırnak ile sarılmış olabilir (.env kopyalamasından)
-    const rawSA = process.env.FIREBASE_SERVICE_ACCOUNT.trim().replace(/^[\u2018\u2019'""]|[\u2018\u2019'""]$/g, '');
+    // Çevreleyen tırnak/karakter ne olursa olsun, doğrudan JSON nesnesini çıkar
+    const jsonMatch = process.env.FIREBASE_SERVICE_ACCOUNT.match(/\{[\s\S]*\}/);
     let serviceAccount;
     try {
-        serviceAccount = JSON.parse(rawSA);
+        if (!jsonMatch) throw new Error("JSON nesnesi bulunamadı");
+        serviceAccount = JSON.parse(jsonMatch[0]);
     } catch (e) {
         console.error("❌ FIREBASE_SERVICE_ACCOUNT geçerli JSON değil!");
-        console.error("İlk 50 karakter:", rawSA.slice(0, 50));
+        console.error("Hata:", e.message);
+        console.error("İlk 80 karakter:", process.env.FIREBASE_SERVICE_ACCOUNT.slice(0, 80));
         process.exit(1);
     }
     admin.initializeApp({
