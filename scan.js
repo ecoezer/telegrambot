@@ -23,8 +23,18 @@ if (!admin.apps.length) {
         console.error("❌ FIREBASE_SERVICE_ACCOUNT eksik!");
         process.exit(1);
     }
+    // Tek tırnak veya çift tırnak ile sarılmış olabilir (.env kopyalamasından)
+    const rawSA = process.env.FIREBASE_SERVICE_ACCOUNT.trim().replace(/^['"]|['"]$/g, '');
+    let serviceAccount;
+    try {
+        serviceAccount = JSON.parse(rawSA);
+    } catch (e) {
+        console.error("❌ FIREBASE_SERVICE_ACCOUNT geçerli JSON değil!");
+        console.error("İlk 50 karakter:", rawSA.slice(0, 50));
+        process.exit(1);
+    }
     admin.initializeApp({
-        credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT))
+        credential: admin.credential.cert(serviceAccount)
     });
 }
 const db = admin.firestore();
