@@ -32,9 +32,13 @@ export default function Dashboard() {
         [filteredBets]
     );
 
-    const totalBets = sortedBets.filter(b => !['push', 'refund', 'void'].includes((b.status || '').toLowerCase())).length;
-    const wonBets = sortedBets.filter(b => ['win', 'won'].includes((b.status || '').toLowerCase())).length;
-    // const lostBets = sortedBets.filter(b => ['loss', 'lost'].includes((b.status || '').toLowerCase())).length;
+    // Only count resolved bets for win rate (exclude pending, void, push)
+    const resolvedBets = sortedBets.filter(b => {
+        const s = (b.status || '').toLowerCase();
+        return ['win', 'won', 'loss', 'lost'].includes(s);
+    });
+    const totalBets = resolvedBets.length;
+    const wonBets = resolvedBets.filter(b => ['win', 'won'].includes((b.status || '').toLowerCase())).length;
     const winRate = totalBets > 0 ? ((wonBets / totalBets) * 100).toFixed(1) : 0;
 
     const unitProfit = sortedBets.reduce((acc, bet) => {
@@ -45,6 +49,39 @@ export default function Dashboard() {
     }, 0);
 
     const totalProfit = (unitProfit * stakeAmount).toFixed(2);
+
+    // Compute real win streak from data
+    const { currentWinStreak, profitHistory, volumeHistory } = useMemo(() => {
+        const chronological = [...resolvedBets].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        let streak = 0;
+        for (let i = chronological.length - 1; i >= 0; i--) {
+            const s = (chronological[i].status || '').toLowerCase();
+            if (['win', 'won'].includes(s)) streak++;
+            else break;
+        }
+
+        // Build cumulative profit over last 7 data points (weekly grouping)
+        const grouped = {};
+        chronological.forEach(b => {
+            const week = new Date(b.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            if (!grouped[week]) grouped[week] = { profit: 0, count: 0 };
+            const st = (b.status || '').toLowerCase();
+            if (['win', 'won'].includes(st)) grouped[week].profit += (b.odds || 1) - 1;
+            else if (['loss', 'lost'].includes(st)) grouped[week].profit -= 1;
+            grouped[week].count++;
+        });
+        const keys = Object.keys(grouped);
+        const last7 = keys.slice(-7);
+        let cumProfit = 0;
+        const profitArr = last7.map(k => { cumProfit += grouped[k].profit; return Math.round(cumProfit * 100) / 100; });
+        const volumeArr = last7.map(k => grouped[k].count);
+
+        return {
+            currentWinStreak: streak,
+            profitHistory: profitArr.length > 1 ? profitArr : [0, 0, 0, 0, 0, 0, 0],
+            volumeHistory: volumeArr.length > 1 ? volumeArr : [0, 0, 0, 0, 0, 0, 0],
+        };
+    }, [resolvedBets]);
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-screen">
@@ -185,8 +222,8 @@ export default function Dashboard() {
                         title="Total Volume"
                         value={totalBets}
                         icon="📊"
-                        trend="+12%"
-                        chart={<Sparkline color="#00D1FF" data={[40, 60, 45, 90, 65, 80, 70]} />}
+                        trend={`${wonBets}W / ${totalBets - wonBets}L`}
+                        chart={<Sparkline color="#00D1FF" data={volumeHistory} />}
                     />
                     <StatCard
                         title="Profit"
@@ -194,21 +231,21 @@ export default function Dashboard() {
                         icon="💎"
                         color={unitProfit >= 0 ? "text-emerald-400" : "text-red-400"}
                         trend={unitProfit >= 0 ? "Bullish" : "Bearish"}
-                        chart={<Sparkline color={unitProfit >= 0 ? "#00FF94" : "#EF4444"} data={[20, 30, 80, 45, 60, 40, 90]} />}
+                        chart={<Sparkline color={unitProfit >= 0 ? "#00FF94" : "#EF4444"} data={profitHistory} />}
                     />
                     <StatCard
                         title="Active Signal"
                         value={bets.filter(b => (b.status || 'pending').toLowerCase() === 'pending').length}
                         icon="🔥"
                         color="text-yellow-400"
-                        chart={<Sparkline color="#FBBF24" data={[50, 40, 30, 45, 50, 40, 50]} />}
+                        chart={<Sparkline color="#FBBF24" data={volumeHistory} />}
                     />
                     <StatCard
                         title="Win Streak"
-                        value="5"
+                        value={currentWinStreak}
                         icon="🏆"
                         color="text-purple-400"
-                        chart={<Sparkline color="#BD00FF" data={[10, 40, 60, 40, 70, 90, 80]} />}
+                        chart={<Sparkline color="#BD00FF" data={profitHistory} />}
                     />
                 </div>
 

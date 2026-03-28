@@ -9,6 +9,7 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { parseBetMessage } from "./src/utils/parser.js";
 import { performOCR, initOCR } from "./src/utils/ocr.js";
+import { checkAndResolveResults } from "./src/utils/resultChecker.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -209,29 +210,36 @@ const scanHistory = async () => {
     console.log("✅ Historic Scan Complete.");
 };
 
-// Helper Macros
+// Helper Macros (with Firestore 500 batch limit protection)
+const FIRESTORE_BATCH_LIMIT = 500;
+
 const saveNewBets = async (bets) => {
     if (bets.length === 0) return;
     console.log(`💾 Saving ${bets.length} new bets...`);
-    const batch = db.batch();
-    bets.forEach(bet => {
-        const ref = db.collection('bets').doc();
-        batch.set(ref, bet);
-    });
-    await batch.commit();
+    for (let i = 0; i < bets.length; i += FIRESTORE_BATCH_LIMIT) {
+        const chunk = bets.slice(i, i + FIRESTORE_BATCH_LIMIT);
+        const batch = db.batch();
+        chunk.forEach(bet => {
+            const ref = db.collection('bets').doc();
+            batch.set(ref, bet);
+        });
+        await batch.commit();
+    }
 };
 
 const updateExistingBets = async (updates) => {
     if (updates.length === 0) return;
     console.log(`💾 Updating ${updates.length} bets...`);
-    const batch = db.batch();
-    updates.forEach(u => {
-        const ref = db.collection('bets').doc(u.id);
-        // Clean up ID from update object
-        const { id, ...data } = u;
-        batch.update(ref, data);
-    });
-    await batch.commit();
+    for (let i = 0; i < updates.length; i += FIRESTORE_BATCH_LIMIT) {
+        const chunk = updates.slice(i, i + FIRESTORE_BATCH_LIMIT);
+        const batch = db.batch();
+        chunk.forEach(u => {
+            const ref = db.collection('bets').doc(u.id);
+            const { id, ...data } = u;
+            batch.update(ref, data);
+        });
+        await batch.commit();
+    }
 };
 
 (async () => {
@@ -239,15 +247,14 @@ const updateExistingBets = async (updates) => {
     await client.connect();
     console.log("✅ Connected to Telegram!");
 
-    console.log("🚀 Starting Userbot Listener...");
-    await client.connect();
-    console.log("✅ Connected to Telegram!");
-
     // Init OCR Worker
     await initOCR();
 
-    // Run scan on startup
+    // Step 1: Scan history and save new bets
     await scanHistory();
+
+    // Step 2: Check results for pending bets and update statuses
+    await checkAndResolveResults(db);
 
     // 4. Add Event Handler
     client.addEventHandler(async (event) => {
@@ -302,12 +309,19 @@ const updateExistingBets = async (updates) => {
             if (betData) {
                 console.log("🎯 FOUND YRL FREE BET!", betData.match);
 
+                // Duplicate check before saving
+                const existingCheck = await db.collection('bets')
+                    .where('match', '==', betData.match)
+                    .where('selection', '==', betData.selection)
+                    .limit(1).get();
+                if (!existingCheck.empty) {
+                    console.log(`⏭️ Duplicate bet skipped: ${betData.match}`);
+                    return;
+                }
+
                 // ENHANCEMENT: If we have a text-based bet but missing odds, check image for odds
-                // Parser checked for Strict Header internally, so betData implies compliance.
                 if (message.media && (!betData.odds || betData.odds === 0)) {
                     const ocrResult = await performOCR(client, message);
-                    // Legacy check: did we get just an odds object or a full object?
-                    // The new OCR returns { odds: 1.77 } if it falls back to simple odds, or a full object.
                     if (ocrResult && ocrResult.odds) {
                         betData.odds = ocrResult.odds;
                         console.log("✅ Enhanced Text Bet with OCR Odds:", betData.odds);
@@ -323,8 +337,32 @@ const updateExistingBets = async (updates) => {
         } catch (e) {
             console.error("Error processing message:", e);
         }
-    }, new NewMessage({})); // Listen to ALL messages (simpler) or filter by channel
+    }, new NewMessage({}));
 
-    // Keep process alive
-    console.log("🎧 Listening for bets...");
+    // Periodic result checking every 30 minutes
+    setInterval(async () => {
+        console.log('\n⏰ Periodic result check triggered...');
+        try {
+            await checkAndResolveResults(db);
+        } catch (e) {
+            console.error('❌ Periodic check failed:', e.message);
+        }
+    }, 30 * 60 * 1000);
+
+    console.log("🎧 Listening for bets... (result check every 30 min)");
 })();
+
+// Graceful shutdown
+const shutdown = async (signal) => {
+    console.log(`\n🛑 ${signal} received. Shutting down gracefully...`);
+    try {
+        const { terminateOCR: terminate } = await import('./src/utils/ocr.js');
+        await terminate();
+    } catch (e) { /* ignore */ }
+    try {
+        await client.disconnect();
+    } catch (e) { /* ignore */ }
+    process.exit(0);
+};
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));

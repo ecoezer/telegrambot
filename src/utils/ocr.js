@@ -139,10 +139,6 @@ export const performOCR = async (client, message) => {
             if (fs.existsSync(tempHeaderCropPath)) fs.unlinkSync(tempHeaderCropPath);
         }
 
-        // Cleanup
-        if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
-        if (fs.existsSync(tempInvertedPath)) fs.unlinkSync(tempInvertedPath);
-
         // Return combined result
         if (betData && (betData.odds > 0 || betData.stake > 1)) {
             console.log(`✅ Final OCR Result: Odds ${betData.odds}, Stake ${betData.stake}`);
@@ -154,10 +150,13 @@ export const performOCR = async (client, message) => {
 
     } catch (ocrError) {
         console.error("❌ OCR Error:", ocrError);
-        // Cleanup on error
-        if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
-        if (fs.existsSync(tempInvertedPath)) fs.unlinkSync(tempInvertedPath);
         return null;
+    } finally {
+        // Always cleanup temp files, even on error
+        const tempHeaderCropPath = path.join(__dirname, `../../temp_bet_headercrop_${message.id}.jpg`);
+        [tempPath, tempInvertedPath, tempHeaderCropPath].forEach(f => {
+            try { if (fs.existsSync(f)) fs.unlinkSync(f); } catch { /* ignore */ }
+        });
     }
 };
 
@@ -181,64 +180,109 @@ const parseOCRText = (text, messageDate) => {
         }
     }
 
-    // 2. Odds Extraction
-    const lines = cleanText.split('\n');
+    // 2. Odds Extraction (5 strategies, from most to least specific)
     let odds = 0;
 
-    for (const line of lines) {
-        if (/Cash out|Possible win|Return|Total/i.test(line)) continue;
+    // Strategy A: Explicit odds keyword (@, Single, Odds) followed by number
+    const explicitOddsMatch = cleanText.match(/(?:@|Single|Odds|Cot|Quota)[\s—:|-]*(\d+[\.,]?\d*)/i);
+    if (explicitOddsMatch) {
+        let val = parseFloat(explicitOddsMatch[1].replace(',', '.'));
+        if (val > 100 && val < 5000) val = val / 100;
+        if (val > 1.0 && val < 50.0) odds = val;
+    }
 
-        const explicitMatch = line.match(/(?:@|Odds|Cot|Quota|Single)[\s—:-]*(\d+[\.,]?\d*)/i);
-        if (explicitMatch) {
-            let val = parseFloat(explicitMatch[1].replace(',', '.'));
-            // Heuristic: If missing decimal point, e.g. 188 -> 1.88
-            if (val > 100 && val < 5000) {
-                val = val / 100;
+    // Strategy B: Odds in parentheses like (1.83) or (1.59 — common in bet slip OCR
+    if (odds === 0) {
+        const parenOddsMatch = cleanText.match(/\((\d+\.\d{1,2})(?:\s|\)|\||]|$)/);
+        if (parenOddsMatch) {
+            const val = parseFloat(parenOddsMatch[1]);
+            if (val > 1.0 && val < 50.0) {
+                console.log(`💡 Found Odds in parentheses: ${val}`);
+                odds = val;
             }
-            // Heuristic: If single decimal place e.g. 1.6
+        }
+    }
+
+    // Strategy C: Calculate from "Possible win" and "Bet amount" (MOST RELIABLE)
+    // OCR text format: "Bet amount Possible win € 900.00 €1,647.00"
+    // The two € amounts are: first = bet amount, second = possible win
+    if (odds === 0) {
+        // Find all € amounts in the text near "Possible win"
+        const possibleWinSection = cleanText.match(/(?:Bet amount|Stake).*?(?:Possible win|Return|To Win)/i);
+        if (possibleWinSection) {
+            // Get the region around "Possible win" for amount extraction
+            const winIdx = cleanText.indexOf('Possible win');
+            const betIdx = cleanText.indexOf('Bet amount');
+            if (winIdx > -1 || betIdx > -1) {
+                const startIdx = Math.max(0, (betIdx > -1 ? betIdx : winIdx) - 10);
+                const endIdx = Math.min(cleanText.length, (winIdx > -1 ? winIdx : betIdx) + 80);
+                const region = cleanText.substring(startIdx, endIdx);
+
+                // Extract all currency amounts in this region
+                const amounts = [...region.matchAll(/€\s*([\d,]+\.?\d*)/g)].map(m =>
+                    parseFloat(m[1].replace(/,/g, ''))
+                ).filter(v => v > 0);
+
+                if (amounts.length >= 2) {
+                    // First amount = bet amount, second = possible win
+                    const betAmt = Math.min(...amounts);
+                    const winAmt = Math.max(...amounts);
+                    if (winAmt > betAmt) {
+                        const calcOdds = Math.round((winAmt / betAmt) * 100) / 100;
+                        if (calcOdds > 1.01 && calcOdds < 50.0) {
+                            console.log(`💡 Calculated Odds from Win/Stake: €${winAmt} / €${betAmt} = ${calcOdds}`);
+                            odds = calcOdds;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fallback: try any two adjacent € amounts where second > first
+        if (odds === 0) {
+            const allAmounts = [...cleanText.matchAll(/€\s*([\d,]+\.?\d*)/g)].map(m =>
+                parseFloat(m[1].replace(/,/g, ''))
+            ).filter(v => v > 10);
+
+            // Look for consecutive pairs where the ratio makes sense as odds
+            for (let i = 0; i < allAmounts.length - 1; i++) {
+                const a = allAmounts[i];
+                const b = allAmounts[i + 1];
+                if (b > a) {
+                    const ratio = Math.round((b / a) * 100) / 100;
+                    if (ratio > 1.01 && ratio < 50.0) {
+                        console.log(`💡 Calculated Odds from adjacent amounts: €${b} / €${a} = ${ratio}`);
+                        odds = ratio;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Strategy D: Standalone decimal number (1.77, 2.10, etc.) not near currency
+    if (odds === 0) {
+        const allFloats = [...cleanText.matchAll(/(?<![€$£\d,])(\d+[\.,]\d{1,2})(?![,\d])/g)];
+        for (const m of allFloats) {
+            const val = parseFloat(m[1].replace(',', '.'));
+            // Skip if this number appears with a currency symbol nearby
+            const idx = m.index;
+            const before = cleanText.substring(Math.max(0, idx - 3), idx);
+            if (/[€$£]/.test(before)) continue;
             if (val > 1.0 && val < 50.0) {
                 odds = val;
                 break;
             }
         }
-
-        const standaloneMatch = line.match(/\b(\d+[\.,]\d{1,2})\b/); // Allow 1 or 2 decimals
-        if (standaloneMatch) {
-            const val = parseFloat(standaloneMatch[1].replace(',', '.'));
-            if (val > 1.0 && val < 50.0) {
-                odds = val;
-            }
-        }
     }
 
+    // Strategy E: Global fallback — look for "Single X.XX" pattern
     if (odds === 0) {
-        const globalMatch = cleanText.match(/(?:@|Single)[\s—:-]*(\d+\.\d{2})/);
+        const globalMatch = cleanText.match(/Single\s+(\d+\.?\d*)/i);
         if (globalMatch) {
-            const val = parseFloat(globalMatch[1]);
-            if (val < 50.0 && !cleanText.includes(`€ ${val}`) && !cleanText.includes(`$ ${val}`)) {
-                odds = val;
-            }
-        }
-    }
-
-    // Heuristic: Calculate Odds from Possible Win / Stake
-    if (odds === 0) {
-        const winRegex = /(?:Possible win|Return|To Win)[\s:€$£]*([\d,]+\.?\d*)/i;
-        const winMatch = cleanText.match(winRegex);
-
-        if (winMatch) {
-            const possibleWin = parseFloat(winMatch[1].replace(/,/g, ""));
-            let calcStake = stake;
-
-            if (calcStake > 1 && possibleWin > calcStake) {
-                const calculatedOdds = possibleWin / calcStake;
-                // Round to 2 decimal places
-                const roundedOdds = Math.round(calculatedOdds * 100) / 100;
-                if (roundedOdds > 1.01 && roundedOdds < 50.0) {
-                    console.log(`💡 Calculated Odds from Win/Stake: ${possibleWin} / ${calcStake} = ${roundedOdds}`);
-                    odds = roundedOdds;
-                }
-            }
+            let val = parseFloat(globalMatch[1]);
+            if (val > 100 && val < 5000) val = val / 100;
+            if (val > 1.0 && val < 50.0) odds = val;
         }
     }
 
@@ -272,6 +316,36 @@ const parseOCRText = (text, messageDate) => {
         match = `${selection} Match`;
     } else if (uniqueId) {
         match = `Bet Slip #${uniqueId}`;
+    }
+
+    // ── Odds Sanity Check ──
+    // OCR often drops the decimal point: "1.8" → "18", "1.67" → "167"
+    // Betting odds are almost never > 15 for single bets
+    if (odds >= 100 && odds < 5000) {
+        // e.g., 167 → 1.67, 188 → 1.88
+        odds = Math.round((odds / 100) * 100) / 100;
+    } else if (odds >= 10 && odds < 100 && Number.isInteger(odds)) {
+        // e.g., 18 → 1.8, 16 → 1.6, 21 → 2.1
+        odds = odds / 10;
+    }
+
+    // Odds <= 1 is NEVER valid for single bets (bookmaker needs margin)
+    if (odds > 0 && odds <= 1.0) {
+        // Likely OCR dropped leading "1": 0.72 → 1.72, 0.55 → 1.55
+        if (odds > 0.01 && odds < 1.0) {
+            console.log(`⚠️ Odds sanity: ${odds} → ${odds + 1} (likely missing leading 1)`);
+            odds = Math.round((odds + 1) * 100) / 100;
+        } else {
+            console.log(`⚠️ Odds sanity: ${odds} is invalid, resetting to 0`);
+            odds = 0;
+        }
+    }
+
+    // Single bet odds > 5 are extremely rare — OCR likely dropped decimal
+    // e.g., 5.5 → 1.55, 7 → 1.7
+    if (odds >= 5 && odds < 10 && Number.isInteger(odds)) {
+        console.log(`⚠️ Odds sanity: ${odds} → 1.${odds} (likely OCR decimal error)`);
+        odds = parseFloat(`1.${odds}`);
     }
 
     if (odds === 0 && stake === 1) return null;

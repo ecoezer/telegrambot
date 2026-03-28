@@ -27,6 +27,26 @@ dist-ssr
 # OCR Data
 eng.traineddata
 
-# Scripts
-# Unignore useful utility scripts
-# scripts/
+# Temp OCR files
+temp_bet_*.jpg
+temp_bet_inverted_*.jpg
+temp_bet_headercrop_*.jpg
+
+# Debug images (lokalde kalsın, GitHub'a gitmesin)
+debug_*.jpg
+test_*.jpg
+test_v*.jpg
+temp_fix_*.jpg
+*.jpg
+*.png
+*.jpeg
+
+# Scripts (tek kullanımlık debug/fix scriptleri - repo'ya gitmesin)
+scripts/
+
+# Pending/audit output files
+pending_*.txt
+pending_*.json
+audit_results.json
+missing_bets.json
+latest_msgs.txt

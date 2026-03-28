@@ -9,11 +9,12 @@ export default function MartingaleSimulator({ bets }) {
         const now = new Date();
 
         // 1. Sort ALL bets chronologically first (Global Simulation)
+        // STRICT POLICY: Never use estimated odds. Only include bets with real odds.
         const allSortedBets = [...bets]
             .filter(b => {
                 const s = b.status?.toLowerCase();
                 const validStatus = (s === 'win' || s === 'won' || s === 'loss' || s === 'lost' || s === 'push' || s === 'void' || s === 'refunded');
-                return validStatus && b.odds > 1;
+                return validStatus && parseFloat(b.odds) > 1;
             })
             .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
@@ -138,12 +139,17 @@ export default function MartingaleSimulator({ bets }) {
         const decidableBets = displayHistory.filter(b => !b.isPush).length;
         const winRate = decidableBets > 0 ? (winCount / decidableBets) * 100 : 0;
 
-        // Chart Data Preparation
-        const chartData = displayHistory.map((b, i) => ({
-            name: i, // Index as x-axis for sequence
-            bankroll: b.periodBankroll,
-            date: new Date(b.timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }) // DD/MM
-        }));
+        // Chart Data Preparation — use actual dates for X-axis
+        const chartData = displayHistory.map((b, i) => {
+            const d = new Date(b.timestamp);
+            return {
+                name: d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }),
+                bankroll: b.periodBankroll,
+                match: b.match,
+                fullDate: d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+                status: b.isWin ? 'WIN' : b.isPush ? 'REFUND' : 'LOSS'
+            };
+        });
 
         return {
             history: displayHistory,
@@ -328,13 +334,9 @@ export default function MartingaleSimulator({ bets }) {
                                 </linearGradient>
                             </defs>
                             <XAxis
-                                dataKey="date"
+                                dataKey="name"
                                 hide={false}
                                 tick={{ fill: '#6b7280', fontSize: 10 }}
-                                tickFormatter={(value) => {
-                                    const parts = value.split('/');
-                                    return parts.length >= 2 ? `${parts[0]}/${parts[1]}` : value;
-                                }}
                                 minTickGap={30}
                             />
                             <YAxis
@@ -346,7 +348,13 @@ export default function MartingaleSimulator({ bets }) {
                             <Tooltip
                                 contentStyle={{ backgroundColor: '#0f172a', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}
                                 itemStyle={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
-                                labelStyle={{ display: 'none' }}
+                                labelFormatter={(_, payload) => {
+                                    if (payload?.[0]?.payload) {
+                                        const p = payload[0].payload;
+                                        return `${p.fullDate} — ${p.match} (${p.status})`;
+                                    }
+                                    return '';
+                                }}
                                 formatter={(value) => [`${value.toFixed(2)}€`, 'Bankroll']}
                             />
                             <Line
@@ -397,9 +405,9 @@ export default function MartingaleSimulator({ bets }) {
                                     <td className="p-4 text-right font-mono font-bold">{bet.calculatedStake.toFixed(2)}€</td>
                                     <td className="p-4 text-center">
                                         <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase border ${bet.isWin ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                                bet.isPush ? 'bg-gray-500/10 text-gray-400 border-gray-500/20' :
-                                                    'bg-rose-500/10 text-rose-400 border-rose-500/20'}`}>
-                                            {bet.isWin ? 'WIN' : bet.isPush ? 'PUSH' : 'LOSS'}
+                                            bet.isPush ? 'bg-gray-500/10 text-gray-400 border-gray-500/20' :
+                                                'bg-rose-500/10 text-rose-400 border-rose-500/20'}`}>
+                                            {bet.isWin ? 'WIN' : bet.isPush ? '♻️ REFUND' : 'LOSS'}
                                         </span>
                                         {bet.note && (
                                             <div className="mt-1 text-[9px] text-orange-400 font-bold uppercase tracking-wide">

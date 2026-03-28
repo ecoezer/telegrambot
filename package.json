@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node listener.js",
+    "scan": "node scan.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
