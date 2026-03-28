@@ -1,7 +1,7 @@
 name: YRL Bets - Otomatik Tarama
 
 on:
-  # Her 30 dakikada bir otomatik çalış (15dk GitHub quota'yı hızlı tüketir)
+  # Her 30 dakikada bir otomatik çalış
   schedule:
     - cron: '*/30 * * * *'
   # Manuel çalıştırma (GitHub arayüzünden Actions > Run workflow)
@@ -20,11 +20,46 @@ jobs:
       - name: ⚙️ Node.js Kur
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: 📦 Bağımlılıkları Yükle
         run: npm ci
+
+      - name: 🔑 Secrets Kontrolü
+        run: |
+          echo "=== Secrets Kontrol Ediliyor ==="
+          if [ -z "$TELEGRAM_API_ID" ]; then
+            echo "❌ HATA: TELEGRAM_API_ID secret eksik!"
+            echo "GitHub > Settings > Secrets > Actions > New secret"
+            exit 1
+          else
+            echo "✅ TELEGRAM_API_ID: mevcut"
+          fi
+          if [ -z "$TELEGRAM_API_HASH" ]; then
+            echo "❌ HATA: TELEGRAM_API_HASH secret eksik!"
+            exit 1
+          else
+            echo "✅ TELEGRAM_API_HASH: mevcut"
+          fi
+          if [ -z "$TELEGRAM_SESSION" ]; then
+            echo "❌ HATA: TELEGRAM_SESSION secret eksik!"
+            exit 1
+          else
+            echo "✅ TELEGRAM_SESSION: mevcut (${#TELEGRAM_SESSION} karakter)"
+          fi
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "❌ HATA: FIREBASE_SERVICE_ACCOUNT secret eksik!"
+            exit 1
+          else
+            echo "✅ FIREBASE_SERVICE_ACCOUNT: mevcut"
+          fi
+          echo "=== Tüm secrets hazır! ==="
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_SESSION: ${{ secrets.TELEGRAM_SESSION }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
       - name: 🚀 Taramayı Çalıştır
         id: scan
@@ -43,30 +78,7 @@ jobs:
 
       - name: ❌ Hata Bildirimi
         if: failure()
-        env:
-          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
-          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
-          TELEGRAM_SESSION: ${{ secrets.TELEGRAM_SESSION }}
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
           echo "❌ Tarama başarısız oldu!"
           echo "Hata zamanı: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-          echo "GitHub Actions loglarını kontrol edin:"
-          echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          # Hata bildirimini Telegram'a gönder
-          node -e "
-          import('telegram').then(async ({ TelegramClient }) => {
-            const { StringSession } = await import('telegram/sessions/index.js');
-            const client = new TelegramClient(
-              new StringSession(process.env.TELEGRAM_SESSION || ''),
-              parseInt(process.env.TELEGRAM_API_ID),
-              process.env.TELEGRAM_API_HASH,
-              { connectionRetries: 3 }
-            );
-            await client.connect();
-            await client.sendMessage('me', {
-              message: '⚠️ YRL Bets Scanner HATA!\n\nGitHub Actions taraması başarısız oldu.\nLog: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            });
-            await client.disconnect();
-          }).catch(console.error);
-          " || echo "Telegram bildirimi gönderilemedi (normal olabilir)"
+          echo "Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
