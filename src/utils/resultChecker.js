@@ -142,6 +142,24 @@ const TEAM_ALIASES = {
     'de minaur': 'Alex de Minaur',
     'cerundolo': 'Francisco Cerundolo',
     'darderi': 'Luciano Darderi',
+    // European Basketball
+    'maccabi tel aviv': 'Maccabi', 'maccabi': 'Maccabi',
+    'real madrid': 'Real Madrid',
+    'barcelona': 'Barcelona',
+    'olympiacos': 'Olympiacos',
+    'panathinaikos': 'Panathinaikos',
+    'fenerbahce beko': 'Fenerbahce', 'fenerbahce': 'Fenerbahce',
+    'anadolu efes': 'Anadolu Efes', 'efes': 'Anadolu Efes',
+    'zalgiris': 'Zalgiris Kaunas', 'zalgiris kaunas': 'Zalgiris Kaunas',
+    'crvena zvezda': 'Crvena Zvezda', 'red star': 'Crvena Zvezda',
+    'partizan': 'Partizan',
+    'monaco basket': 'Monaco', 'as monaco': 'Monaco',
+    'baskonia': 'Baskonia',
+    'virtus bologna': 'Virtus Bologna', 'virtus': 'Virtus Bologna',
+    'olimpia milano': 'Olimpia Milano', 'milano': 'Olimpia Milano',
+    'dubai basketball': 'Dubai', 'dubai': 'Dubai',
+    'hapoel tel aviv': 'Hapoel Tel Aviv', 'hapoel': 'Hapoel Tel Aviv',
+    'asvel': 'ASVEL', 'asvel lyon': 'ASVEL',
 };
 
 /**
@@ -566,6 +584,20 @@ const parseScoreFromHTML = (html, teams, betDate, sportType) => {
         .toLowerCase();
 
     if (!cleanText || cleanText.length < 50) return null;
+
+    // CRITICAL FIX: Date Validation for WebSearch
+    // If we're searching for a match on "26 Mar 2026", we must ensure that the text snippet
+    // does NOT explicitly contain old dates like "2025" or "2024" if betDate is 2026.
+    if (betDate) {
+        const d = new Date(betDate);
+        const year = d.getFullYear().toString();
+        const prevYear = (d.getFullYear() - 1).toString();
+        // If snippet prominently features LAST year, reject it as an old match result!
+        if (cleanText.includes(prevYear) && !cleanText.includes(year)) {
+            console.log(`⚠️ WebSearch rejected due to old year detected (${prevYear}): ${teams.homeRaw} vs ${teams.awayRaw}`);
+            return null;
+        }
+    }
 
     const homeLower = teams.homeRaw.toLowerCase().trim();
     const awayLower = teams.awayRaw.toLowerCase().trim();
@@ -1227,9 +1259,17 @@ export const checkAndResolveResults = async (db) => {
 
                 // Process all bets for this match
                 for (const bet of bets) {
-                    const status = determineBetStatus(bet, result);
+                    let status = determineBetStatus(bet, result);
 
-                    if (status) {
+                    // CRITICAL: WebSearch Confidence Threshold
+                    // If the result came purely from Google/Brave search, do NOT automatically
+                    // resolve as WON or LOST. Leave it 'pending' with a special source flag so user can check.
+                    if (status && result.source === 'WebSearch') {
+                        console.log(`  ⚠️ [WebSearch] Detected potential ${status.toUpperCase()} for ${matchName}, flagged for review.`);
+                        status = 'pending'; // Stay pending, manual review required
+                    }
+
+                    if (status && status !== 'pending') {
                         batchUpdates.push({
                             ref: bet.ref,
                             data: {
@@ -1243,6 +1283,17 @@ export const checkAndResolveResults = async (db) => {
                         resolved++;
                         const retryNote = retryCount > 0 ? ` (found on retry #${retryCount})` : '';
                         console.log(`  ✅ [${result.source}] ${matchName}: ${result.score} → ${status.toUpperCase()}${retryNote}`);
+                    } else if (result.source === 'WebSearch') {
+                        // Flagged for review
+                        batchUpdates.push({
+                            ref: bet.ref,
+                            data: {
+                                score: `? ${result.score} (Google)`,
+                                lastVerified: now.toISOString(),
+                                resultSource: `needs_review_${result.source}`,
+                                retryCount: (bet.retryCount || 0)
+                            }
+                        });
                     } else {
                         batchUpdates.push({
                             ref: bet.ref,

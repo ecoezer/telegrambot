@@ -50,3 +50,6 @@ pending_*.json
 audit_results.json
 missing_bets.json
 latest_msgs.txt
+
+# Local Netlify folder
+.netlify

@@ -13,6 +13,7 @@ import { StringSession } from "telegram/sessions/index.js";
 import admin from 'firebase-admin';
 import dotenv from "dotenv";
 import { parseBetMessage } from "./src/utils/parser.js";
+import { initOCR, performOCR, terminateOCR } from "./src/utils/ocr.js";
 import { checkAndResolveResults } from "./src/utils/resultChecker.js";
 
 dotenv.config();
@@ -88,6 +89,9 @@ async function main() {
     await client.connect();
     console.log("✅ Telegram bağlantısı kuruldu.");
 
+    // OCR Başlat (Resimlerdeki oranları okumak için)
+    await initOCR();
+
     // Son taranan mesaj ID'sini Firestore'dan al
     const metaRef = db.collection('_meta').doc('scanner');
     const metaDoc = await metaRef.get();
@@ -117,8 +121,8 @@ async function main() {
     const existingBetsMap = new Map();
     existingBetsSnapshot.forEach(doc => {
         const data = doc.data();
-        if (data.match && data.selection) {
-            existingBetsMap.set(`${data.match}_${data.selection}`, true);
+        if (data.match && data.selection && data.formattedDate) {
+            existingBetsMap.set(`${data.match}_${data.selection}_${data.formattedDate}`, true);
         }
     });
     console.log(`🗂️  Mevcut ${existingBetsMap.size} bahis yüklendi.`);
@@ -138,11 +142,42 @@ async function main() {
         // VIP spam'i atla
         if (text.includes("VIP Classic")) continue;
 
+        const isStrictDailyBet = text.includes("Daily BET from YRL BETS");
+
         // Text parser ile bahis çıkar
-        const betData = parseBetMessage(text, message.date);
+        let betData = parseBetMessage(text, message.date);
+
+        // Fallback: OCR - Text parse edildi ama oran (odds) yok veya stake default (1)
+        if (betData && message.media && ((!betData.odds || betData.odds === 0) || betData.stake === 1)) {
+            console.log(`📷 Metin okundu ama Oran/Miktar eksik. Resim OCR ile taranıyor: ${betData.match}`);
+            try {
+                const ocrResult = await performOCR(client, message);
+                if (ocrResult && (ocrResult.odds > 0 || ocrResult.stake > 1)) {
+                    console.log(`✅ Text bahis OCR ile zenginleştirildi! Oran: ${ocrResult.odds}, Miktar: ${ocrResult.stake}`);
+                    if (ocrResult.odds > 0) betData.odds = ocrResult.odds;
+                    if (ocrResult.stake > 1) betData.stake = ocrResult.stake;
+                }
+            } catch (e) {
+                console.log("⚠️ OCR Zenginleştirme Hatası:", e.message);
+            }
+        }
+
+        // Fallback: Text parse edilemedi (örn: format bozuk) ama strict header mevcut
+        if (!betData && message.media && isStrictDailyBet) {
+            console.log("📷 'Daily BET' başlığı var ama normal parser okuyamadı. Resim OCR ile taranıyor...");
+            try {
+                const ocrResult = await performOCR(client, message);
+                if (ocrResult && ocrResult.source === 'OCR') {
+                    betData = ocrResult;
+                    console.log("✨ Resmi okuyarak yeni bahis oluşturuldu:", betData.match);
+                }
+            } catch (e) {
+                console.log("⚠️ OCR Okuma Hatası:", e.message);
+            }
+        }
 
         if (betData) {
-            const key = `${betData.match}_${betData.selection}`;
+            const key = `${betData.match}_${betData.selection}_${betData.formattedDate}`;
             if (!existingBetsMap.has(key)) {
                 betData.source = 'YRL_BETS_ACTIONS';
                 newBets.push(betData);
@@ -186,6 +221,7 @@ main()
         process.exit(1);
     })
     .finally(async () => {
+        try { await terminateOCR(); } catch (_) { }
         try { await client.disconnect(); } catch (_) { }
         // Firebase bağlantısını kapat
         setTimeout(() => process.exit(0), 3000);

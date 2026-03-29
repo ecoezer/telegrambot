@@ -33,14 +33,14 @@ export const terminateOCR = async () => {
 const processImageForHeader = async (inputPath, outputPath) => {
     try {
         const image = await Jimp.read(inputPath);
-        // Increase contrast to max (1) to make text pop against background, then invert
-        await image.greyscale().contrast(1).invert().write(outputPath);
+        // Normalize colors, increase contrast to max, invert, then threshold for binary text
+        await image.normalize().greyscale().contrast(1).invert().threshold({ max: 200 }).write(outputPath);
     } catch (e) {
         console.error("❌ Image Processing Failed:", e);
     }
 };
 
-// New Helper: Crop Header Strip (Top 25%) for "Single - Odds"
+// New Helper: Crop Header Strip (Top 25%) and Bottom (Bottom 25%) for "Single - Odds"
 const processImageForHeaderCrop = async (inputPath, outputPath) => {
     try {
         const image = await Jimp.read(inputPath);
@@ -51,8 +51,10 @@ const processImageForHeaderCrop = async (inputPath, outputPath) => {
         // FIXED: Using object syntax for crop (Jimp v1.0+)
         await image.crop({ x: 0, y: 0, w: w, h: Math.floor(h * 0.25) })
             .scale(2) // Scale up 2x
+            .normalize()
             .invert() // White text on blue -> Black on White
             .contrast(1) // High contrast
+            .threshold({ max: 200 }) // Binarize background
             .write(outputPath);
     } catch (e) {
         console.error("❌ Header Crop Processing Failed:", e);
@@ -81,7 +83,7 @@ export const performOCR = async (client, message) => {
         // --- PASS 1: Standard OCR (Best for Body Text: Stake, Teams) ---
         console.log("🔍 Running OCR Pass 1 (Standard)...");
         const { data: { text: textPass1 } } = await worker.recognize(tempPath);
-        // console.log(`📝 Text Pass 1:`, textPass1);
+        console.log(`📝 Text Pass 1:`, textPass1);
 
         let betData = parseOCRText(textPass1, message.date);
 
@@ -184,7 +186,7 @@ const parseOCRText = (text, messageDate) => {
     let odds = 0;
 
     // Strategy A: Explicit odds keyword (@, Single, Odds) followed by number
-    const explicitOddsMatch = cleanText.match(/(?:@|Single|Odds|Cot|Quota)[\s—:|-]*(\d+[\.,]?\d*)/i);
+    const explicitOddsMatch = cleanText.match(/(?:@|Single|Odds|Cot|Quota)[\s—:|-]*(\d+[\.,]?\d*)(?!\s*(?:AM|PM|:|am|pm))/i);
     if (explicitOddsMatch) {
         let val = parseFloat(explicitOddsMatch[1].replace(',', '.'));
         if (val > 100 && val < 5000) val = val / 100;
@@ -267,8 +269,16 @@ const parseOCRText = (text, messageDate) => {
             const val = parseFloat(m[1].replace(',', '.'));
             // Skip if this number appears with a currency symbol nearby
             const idx = m.index;
-            const before = cleanText.substring(Math.max(0, idx - 3), idx);
-            if (/[€$£]/.test(before)) continue;
+            const before = cleanText.substring(Math.max(0, idx - 45), idx).trim();
+            if (/[€$£]/.test(before.substring(before.length - 3))) continue;
+            
+            // Skip if it looks like a handicap or over/under line (-3.5, +2.5, Over 2.5)
+            // Look right before the number for minus, plus, or keywords
+            if (/[-+]$/.test(before) || /(Handicap|Over|Under|Total)[^0-9]*$/i.test(before)) {
+                console.log(`⚠️ Ignored ${val} as it appears to be a line/handicap, not odds.`);
+                continue;
+            }
+
             if (val > 1.0 && val < 50.0) {
                 odds = val;
                 break;
@@ -289,13 +299,26 @@ const parseOCRText = (text, messageDate) => {
     // Heuristic: Stake from Cash Out
     if (stake === 1) {
         const notStarted = /Not started|Pending/i.test(cleanText);
-        const cashOutMatch = cleanText.match(/Cash out.*(?:€|\$|£|:\s*)\s*([\d,]+\.?\d*)/i);
+        // NON-GREEDY .*? and ONLY look for currency symbols (no colons) to prevent matching "09:30 PM" as stake = 30
+        const cashOutMatch = cleanText.match(/Cash out.*?(?:€|\$|£)\s*([\d,]+\.?\d*)/i);
 
         if (cashOutMatch && notStarted) {
             const cashOutValue = parseFloat(cashOutMatch[1].replace(/,/g, ""));
             if (cashOutValue > 10) {
                 stake = cashOutValue;
                 console.log(`💡 Inferred Stake from Cash Out: ${stake}`);
+            }
+        }
+
+        // Final Fallback: If still 1 but there is an explicit € amount, take the first one larger than 5
+        if (stake === 1) {
+            const anyCurrencyMatch = cleanText.match(/(?:€|\$|£)\s*([\d,]{2,}\.?\d*)/);
+            if (anyCurrencyMatch) {
+                const currencyVal = parseFloat(anyCurrencyMatch[1].replace(/,/g, ""));
+                if (currencyVal > 5) {
+                    stake = currencyVal;
+                    console.log(`💡 Inferred Stake from generic currency symbol: ${stake}`);
+                }
             }
         }
     }
